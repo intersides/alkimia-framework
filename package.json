@@ -1,0 +1,19 @@
+{
+    "name": "@intersides/alkimia-framework",
+    "version": "0.1.8",
+    "description": "A simple cli to build JavaScript modules ",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "widget_test-build_watch": "npm run make-importable-resources_for_build && rm -rf app/widgets/TestWidget/playground/dist/* && parcel --dist-dir app/widgets/TestWidget/playground/dist app/widgets/TestWidget/playground/index.html"
+    },
+    "author": "InterSides",
+    "license": "ISC",
+    "bin": "cli.js",
+    "dependencies": {
+        "callsites": "^4.0.0",
+        "js-better-fs": "^1.0.0",
+        "prompts": "^2.4.2",
+        "short-uuid": "^4.2.0"
+    }
+}
