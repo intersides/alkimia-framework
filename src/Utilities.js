@@ -41,6 +41,14 @@ export const Utilities = {
 					this.view.setAttribute('data-skin', skinName);
 				};
 
+				/**
+				 *
+				 * @param {HTMLElement} _component
+				 */
+				this.appendChild = (_component)=>{
+					this.view.appendChild(_component);
+				}
+
 			}
 		};
 

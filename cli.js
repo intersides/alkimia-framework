@@ -38,7 +38,10 @@ let props = {
 
 
 
-(async ()=>{
-	await Alkimia.generateModule(props);
-	await Alkimia.bundleUp(props);
+(()=>{
+	Alkimia.generateModule(props).then(_userProps=>{
+		Alkimia.bundleUp(_userProps);
+	}).catch(_exc=>{
+		console.error("Failed to generate module");
+	});
 })();

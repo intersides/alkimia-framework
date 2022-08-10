@@ -4,7 +4,7 @@ const fs = require('js-better-fs');
 const path = require('path');
 const Utilities = require("@intersides/utilities");
 const Console = require("@intersides/console");
-const {moduleMaker, scss, playgroundHtml, playgroundJS} = require("./modules");
+const {moduleMaker, scss, playgroundHtml, playgroundJS} = require("./modulesMaker");
 
 function createComponent(_props){
     let props = {
@@ -61,8 +61,6 @@ function createComponent(_props){
             initial:false
         });
 
-
-
         let playgroundDir = `${dirResponse.dir}/${componentName}/playground`;
 
         let assetsGenerator = moduleGenerator({
@@ -84,7 +82,8 @@ function createComponent(_props){
             await fs.writeFile(`${modulePath}${componentName}/${componentName}.scss`, assetsGenerator.scss);
             await fs.writeFile(`${modulePath}${componentName}/${componentName}.html`, '');
             await fs.writeFile(`${modulePath}${componentName}/playground/index.html`, assetsGenerator.playgroundHtml);
-            nodePackage.scripts["playground"] = "parcel --dist-dir ./dist ./index.html";
+            nodePackage.scripts["clear-dist"] = "rm -rf ./dist/*";
+            nodePackage.scripts["playground"] = "npm run clear-dist && parcel --dist-dir ./dist ./index.html";
         }
         else{
             nodePackage.scripts["playground"] = "node ./index.mjs";
@@ -128,6 +127,7 @@ function moduleGenerator(_params){
 
     return {
         js: moduleMaker.v2(moduleElementId, moduleName, params.isSingleton, params.withDome),
+        // js: moduleMaker.v1(moduleElementId, moduleName),
         scss:scss(moduleName),
         playgroundHtml:playgroundHtml(moduleName),
         playgroundJS:playgroundJS(moduleName, params.withDome),

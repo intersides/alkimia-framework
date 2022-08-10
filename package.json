@@ -1,13 +1,13 @@
 {
     "name": "@intersides/alkimia-framework",
-    "version": "0.1.11",
+    "version": "0.1.13",
     "description": "Alkimia cli to build JavaScript modules ",
     "main": "src/createComponent.js",
     "bin": "cli.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "compile-scss": "npm run compile-scss",
-        "cli": "node cli.js --srcDir=app --env=test"
+        "cli": "node cli.js --srcDir=apptest --env=test"
     },
     "author": "InterSides",
     "license": "ISC",
@@ -19,7 +19,7 @@
         "short-uuid": "^4.2.0"
     },
     "devDependencies": {
-        "@parcel/transformer-inline-string": "^2.6.2",
-        "parcel": "^2.0.1"
+        "@parcel/transformer-inline-string": "^2.7.0",
+        "parcel": "^2.7.0"
     }
 }

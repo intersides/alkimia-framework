@@ -1,4 +1,3 @@
-const fs = require("fs");
 
 module.exports = {
     moduleMaker:{
@@ -16,7 +15,7 @@ import htmlTemplate from '${importHtm}';
 
 let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleName}", '${_moduleId}');`: ``}
 
-function Constructor(props){
+function _${_moduleName}(props){
 
     let params = {};
     
@@ -41,17 +40,14 @@ function Constructor(props){
     };
     
     ${withDomNode? `function _initView(){
-        console.debug("_initView() - called");
     }
      
     this.getView = ()=>{
-        console.debug(_vRoot)
-        return _vRoot.view;
+        return _vRoot;
     };
     `:``}
 
     function _registerEvents(){
-        console.debug("_registerEvents() - called");
     }
     
     _initialize(props);
@@ -65,19 +61,19 @@ export let ${_moduleName} = Object.freeze({
     ${isSingleton? `
     getSingleton:(_props)=>{
         if(!singleTone){
-            singleTone = Constructor.call(new (function ${_moduleName}(){}), _props);
+            singleTone = _${_moduleName}.call(new (function ${_moduleName}(){}), _props);
         }
         return singleTone;
     },`:`
     getInstance:function(_props){
-        return Object.seal(Constructor.call(new (function ${_moduleName}(){}), _props));
+        return Object.seal(_${_moduleName}.call(new (function ${_moduleName}(){}), _props));
     }`}
     
 });`;},
         //DEPRECATED:
         v1:function(widgetElementId, widgetName){
-            let importStyle = `bundle-text:./${widgetName}Widget.css`;
-            let importHtm = `./${widgetName}Widget.html`;
+            let importStyle = `bundle-text:./${widgetName}.css`;
+            let importHtm = `./${widgetName}.html`;
             importHtm = `bundle-text:${importHtm}`;
 
             return `"use strict";
@@ -85,9 +81,9 @@ import { Utilities } from '../common.mjs';
 import style from '${importStyle}'
 import htmlTemplate from '${importHtm}';
 
-let customElementElement = Utilities.createAndRegisterWidgetElement("${widgetName}Widget", '${widgetElementId}');
+let customElementElement = Utilities.createAndRegisterWidgetElement("${widgetName}", '${widgetElementId}');
 
-function _${widgetName}Widget(){
+function _${widgetName}(){
 
     let _vRoot = new customElementElement(style, htmlTemplate);
 
@@ -111,9 +107,9 @@ function _${widgetName}Widget(){
 
 }
 
-export let ${widgetName}Widget = Object.freeze({
+export let ${widgetName} = Object.freeze({
     getInstance:()=>{
-        let instance = new _${widgetName}Widget();
+        let instance = new _${widgetName}();
         instance.init();
         return instance.exportable;
     }
