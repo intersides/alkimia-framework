@@ -8,7 +8,7 @@ module.exports = {
             importHtm = `bundle-text:${importHtm}`;
 
             return `"use strict";
-import {Utilities} from '../common.mjs';
+import Utilities from '@intersides/utilities';
 
 ${withDomNode ? `import style from '${importStyle}'
 import htmlTemplate from '${importHtm}';
@@ -77,7 +77,7 @@ export let ${_moduleName} = Object.freeze({
             importHtm = `bundle-text:${importHtm}`;
 
             return `"use strict";
-import { Utilities } from '../common.mjs';
+import Utilities from '@intersides/utilities';
 import style from '${importStyle}'
 import htmlTemplate from '${importHtm}';
 

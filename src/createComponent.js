@@ -94,15 +94,15 @@ function createComponent(_props){
 
 
         //install the common utilities if not present
-        let commonFile = path.join(modulePath, `common.mjs`);
-        let utilityFile = path.join(__dirname, `Utilities.js`);
-        if(! await fs.exists(commonFile)){
-            Console.warn("common utility file should be added");
-            let utilityFileContent = fs.readFile(utilityFile, {encoding:"utf8"});
-            await fs.writeFile(commonFile, utilityFileContent);
-        }
-
-        Console.log(`${modulePath}${componentName} generated!`);
+        //let commonFile = path.join(modulePath, `common.mjs`);
+        //let utilityFile = path.join(__dirname, `Utilities.js`);
+        //if(! await fs.exists(commonFile)){
+        //    Console.warn("common utility file should be added");
+        //    let utilityFileContent = fs.readFile(utilityFile, {encoding:"utf8"});
+        //    await fs.writeFile(commonFile, utilityFileContent);
+        //}
+        //
+        //Console.log(`${modulePath}${componentName} generated!`);
 
         resolve(props);
     });
