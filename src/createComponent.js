@@ -82,8 +82,9 @@ function createComponent(_props){
             await fs.writeFile(`${modulePath}${componentName}/${componentName}.scss`, assetsGenerator.scss);
             await fs.writeFile(`${modulePath}${componentName}/${componentName}.html`, '');
             await fs.writeFile(`${modulePath}${componentName}/playground/index.html`, assetsGenerator.playgroundHtml);
+            nodePackage.scripts["compile-scss"] = "npx sass ../";
             nodePackage.scripts["clear-dist"] = "rm -rf ./dist/*";
-            nodePackage.scripts["playground"] = "npm run clear-dist && parcel --dist-dir ./dist ./index.html";
+            nodePackage.scripts["playground"] = "npm run compile-scss && npm run clear-dist && parcel --dist-dir ./dist ./index.html";
         }
         else{
             nodePackage.scripts["playground"] = "node ./index.mjs";
