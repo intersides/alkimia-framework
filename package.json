@@ -13,13 +13,14 @@
     "license": "ISC",
     "dependencies": {
         "@intersides/console": "^1.0.1",
-        "@intersides/utilities": "^1.0.5",
+        "@intersides/utilities": "^1.0.10",
         "js-better-fs": "^1.0.0",
         "prompts": "^2.4.2",
         "short-uuid": "^4.2.0"
     },
     "devDependencies": {
         "@parcel/transformer-inline-string": "^2.7.0",
-        "parcel": "^2.7.0"
+        "parcel": "^2.7.0",
+        "sass": "^1.54.4"
     }
 }
