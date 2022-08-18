@@ -44,8 +44,7 @@ function createComponent(_props){
             componentName = nameResponse['componentName'][0].toUpperCase() + nameResponse['componentName'].substring(1);
         }
 
-        Console.debug("componentName:", componentName);
-
+        console.log("component will be named as:", componentName);
 
         const asSingletonChoice =  await prompts({
             type:"confirm",

@@ -8,9 +8,7 @@ module.exports = {
             importHtm = `bundle-text:${importHtm}`;
 
             return `"use strict";
-import Utilities from '@intersides/utilities';
-
-${withDomNode ? `import style from '${importStyle}'
+import Utilities from '@intersides/utilities';${withDomNode ? `\nimport style from '${importStyle}'
 import htmlTemplate from '${importHtm}';
 
 let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleName}", '${_moduleId}');`: ``}
@@ -18,18 +16,23 @@ let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleNa
 function _${_moduleName}(props){
 
     let params = {};
-    
-    ${withDomNode? `let _vRoot = new customElementElement(style, htmlTemplate);`:``}
-    
-    const _initialize = (_props)=>{
+    ${withDomNode? `\n\tlet _vRoot = new customElementElement(style, htmlTemplate);\n`:``}
+    function _initialize(_props){
         Utilities.transferParams(_props, params);
         for(const argumentsKey in params){
             this[argumentsKey] = params[argumentsKey];
-        }
-        ${withDomNode? `_initView();`:``}
+        }${withDomNode? `\n\t\t_initView();`:``}
         _registerEvents();
     }
-
+    ${withDomNode? `\n\tfunction _initView(){
+    }
+     
+    this.getView = ()=>{
+        return _vRoot;
+    };
+    `:``}
+    function _registerEvents(){}
+   
     this.toString = (_space)=>{
         if(_space){
             return JSON.stringify(this, null, _space);
@@ -39,24 +42,11 @@ function _${_moduleName}(props){
         }
     };
     
-    ${withDomNode? `function _initView(){
-    }
-     
-    this.getView = ()=>{
-        return _vRoot;
-    };
-    `:``}
-
-    function _registerEvents(){
-    }
-    
     _initialize(props);
 
     return this;
 }
-
-${isSingleton? `let singleTone = null;`:``}
-
+${isSingleton? `\nlet singleTone = null;\n`:``}
 export let ${_moduleName} = Object.freeze({
     ${isSingleton? `
     getSingleton:(_props)=>{
