@@ -18,10 +18,7 @@ function _${_moduleName}(props){
     let params = {};
     ${withDomNode? `\n\tlet _vRoot = new customElementElement(style, htmlTemplate);\n`:``}
     function _initialize(_props){
-        Utilities.transferParams(_props, params);
-        for(const argumentsKey in params){
-            this[argumentsKey] = params[argumentsKey];
-        }${withDomNode? `\n\t\t_initView();`:``}
+        Utilities.transferParams(_props, params);${withDomNode? `\n\t\t\t\t_initView();`:``}
         _registerEvents();
     }
     ${withDomNode? `\n\tfunction _initView(){
