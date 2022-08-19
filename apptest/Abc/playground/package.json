@@ -1,0 +1,9 @@
+{
+    "description": "generated support file",
+    "scripts": {
+        "compile-scss": "npx sass ../",
+        "clear-dist": "rm -rf ./dist/*",
+        "playground-Abc": "npm run compile-scss && npm run clear-dist && parcel --dist-dir ./dist ./index.html",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    }
+}

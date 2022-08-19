@@ -83,10 +83,10 @@ function createComponent(_props){
             await fs.writeFile(`${modulePath}${componentName}/playground/index.html`, assetsGenerator.playgroundHtml);
             nodePackage.scripts["compile-scss"] = "npx sass ../";
             nodePackage.scripts["clear-dist"] = "rm -rf ./dist/*";
-            nodePackage.scripts["playground"] = "npm run compile-scss && npm run clear-dist && parcel --dist-dir ./dist ./index.html";
+            nodePackage.scripts[`playground-${componentName}`] = "npm run compile-scss && npm run clear-dist && parcel --dist-dir ./dist ./index.html";
         }
         else{
-            nodePackage.scripts["playground"] = "node ./index.mjs";
+            nodePackage.scripts[`playground-${componentName}`] = "node ./index.mjs";
         }
         nodePackage.scripts["test"] = "echo \"Error: no test specified\" && exit 1";
         await fs.writeFile(`${modulePath}${componentName}/playground/package.json`, JSON.stringify(nodePackage, null, 4)  );
@@ -114,7 +114,7 @@ function moduleGenerator(_params){
         playgroundDir:null,
         isSingleton:false,
         withDome:false
-    }
+    };
 
     Utilities.transferParams(_params, params);
 
@@ -130,7 +130,7 @@ function moduleGenerator(_params){
         // js: moduleMaker.v1(moduleElementId, moduleName),
         scss:scss(moduleName),
         playgroundHtml:playgroundHtml(moduleName),
-        playgroundJS:playgroundJS(moduleName, params.withDome),
+        playgroundJS:playgroundJS(moduleName, params.isSingleton, params.withDome),
         packageBuildCommand:{
             key:`service_${_params.name}-playground`,
             cmd:`parcel --dist-dir ${_params.playgroundDir}/dist ${_params.playgroundDir}/index.html`

@@ -106,19 +106,18 @@ export let ${widgetName} = Object.freeze({
 });`;
         }
     },
-    playgroundJS:function(moduleName, withDome=false){
+    playgroundJS:function(moduleName, isSingleton, withDome=false){
         return `
 import { ${moduleName} } from '../${moduleName}.mjs';
 
 ${withDome ? 
 /*generate the module with a basic app container to attach to it*/
 `const _vApp = document.createElement("app");
-document.body.appendChild(_vApp);
-let htmlModule = ${moduleName}.getInstance();
-_vApp.appendChild(htmlModule.getView());`
-            :/*without html view*/`
-const myModule = ${moduleName}.getSingleton({});
-console.debug("myModule", myModule);
+document.body.appendChild(_vApp);\n
+let ${moduleName.toLowerCase()}Widget = ${moduleName}.${isSingleton === true ? "getSingleton":"getInstance"}();
+_vApp.appendChild(${moduleName.toLowerCase()}Widget.getView());`:/*without html view*/`
+const ${moduleName.toLowerCase()}Singleton = ${moduleName}.${isSingleton === true ? "getSingleton":"getInstance"}();
+console.debug("${moduleName.toLowerCase()}Singleton :", ${moduleName.toLowerCase()}Singleton);
 `}`
     },
     playgroundHtml:function(widgetName){
@@ -140,4 +139,4 @@ console.debug("myModule", myModule);
 .${widgetName}{
 }`;
     },
-}
+};
