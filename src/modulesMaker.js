@@ -20,6 +20,8 @@ function _${_moduleName}(props){
     function _initialize(_props){
         Utilities.transferParams(_props, params);${withDomNode? `\n\t\t\t\t_initView();`:``}
         _registerEvents();
+        
+        return this;
     }
     ${withDomNode? `\n\tfunction _initView(){
     }
@@ -39,9 +41,7 @@ function _${_moduleName}(props){
         }
     };
     
-    _initialize(props);
-
-    return this;
+    return _initialize(props);
 }
 ${isSingleton? `\nlet singleTone = null;\n`:``}
 export let ${_moduleName} = Object.freeze({
