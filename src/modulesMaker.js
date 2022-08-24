@@ -41,7 +41,7 @@ function _${_moduleName}(props){
         }
     };
     
-    return _initialize(props);
+    return _initialize.call(this, props);
 }
 ${isSingleton? `\nlet singleTone = null;\n`:``}
 export let ${_moduleName} = Object.freeze({
