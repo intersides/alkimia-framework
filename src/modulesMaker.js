@@ -13,6 +13,9 @@ import htmlTemplate from '${importHtm}';
 
 let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleName}", '${_moduleId}');`: ``}
 
+/**
+ @typedef {Object} ${_moduleName}
+ */
 function _${_moduleName}(props){
 
     let params = {};
@@ -25,13 +28,24 @@ function _${_moduleName}(props){
     }
     ${withDomNode? `\n\tfunction _initView(){
     }
+
+    function _registerEvents(){}
      
+    /**
+     *@typedef {function} ${_moduleName}.getView
+     * @param {string} getView
+     * @return {HTMLElement}
+    */
     this.getView = ()=>{
         return _vRoot;
     };
     `:``}
-    function _registerEvents(){}
    
+    /**
+     *@typedef {function} ${_moduleName}.toString
+     * @param {number|string} _space
+     * @return {string}
+    */
     this.toString = (_space)=>{
         if(_space){
             return JSON.stringify(this, null, _space);
@@ -45,6 +59,10 @@ function _${_moduleName}(props){
 }
 ${isSingleton? `\nlet singleTone = null;\n`:``}
 export let ${_moduleName} = Object.freeze({
+    /**
+     * @param {Object}_props
+     * @return {${_moduleName}}
+     */
     ${isSingleton? `
     getSingleton:(_props)=>{
         if(!singleTone){
