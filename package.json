@@ -19,8 +19,7 @@
         "short-uuid": "^4.2.0"
     },
     "devDependencies": {
-        "@parcel/transformer-inline-string": "^2.7.0",
-        "parcel": "^2.7.0",
-        "sass": "^1.54.4"
+        "sass": "^1.54.4",
+        "vite": "^3.2.5"
     }
 }

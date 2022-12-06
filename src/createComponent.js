@@ -81,9 +81,9 @@ function createComponent(_props){
             await fs.writeFile(`${modulePath}${componentName}/${componentName}.scss`, assetsGenerator.scss);
             await fs.writeFile(`${modulePath}${componentName}/${componentName}.html`, '');
             await fs.writeFile(`${modulePath}${componentName}/playground/index.html`, assetsGenerator.playgroundHtml);
-            nodePackage.scripts["compile-scss"] = "npx sass ../";
-            nodePackage.scripts["clear-dist"] = "rm -rf ./dist/*";
-            nodePackage.scripts[`playground-${componentName}`] = "npm run compile-scss && npm run clear-dist && parcel --dist-dir ./dist ./index.html";
+            let config = fs.readFile("./vite.config.js", {encoding:"utf-8"});
+            await fs.writeFile(`${modulePath}${componentName}/playground/vite.config.js`, config);
+            nodePackage.scripts[`playground-${componentName}`] = "vite";
         }
         else{
             nodePackage.scripts[`playground-${componentName}`] = "node ./index.mjs";
@@ -126,15 +126,10 @@ function moduleGenerator(_params){
     const moduleName = params.name[0].toUpperCase() + params.name.substring(1);
 
     return {
-        js: moduleMaker.v2(moduleElementId, moduleName, params.isSingleton, params.withDome),
-        // js: moduleMaker.v1(moduleElementId, moduleName),
+        js: moduleMaker(moduleElementId, moduleName, params.isSingleton, params.withDome),
         scss:scss(moduleName),
         playgroundHtml:playgroundHtml(moduleName),
-        playgroundJS:playgroundJS(moduleName, params.isSingleton, params.withDome),
-        packageBuildCommand:{
-            key:`service_${_params.name}-playground`,
-            cmd:`parcel --dist-dir ${_params.playgroundDir}/dist ${_params.playgroundDir}/index.html`
-        }
+        playgroundJS:playgroundJS(moduleName, params.isSingleton, params.withDome)
     }
 }
 

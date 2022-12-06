@@ -50,7 +50,7 @@ const prepareBundle = function(_params){
         console.debug(entry, entry+".mjs");
     }
 
-}
+};
 
 
 

@@ -1,11 +1,10 @@
 
 module.exports = {
-    moduleMaker:{
-        v2: function(_moduleId, _moduleName, isSingleton=false, withDomNode=false){
+    moduleMaker:function(_moduleId, _moduleName, isSingleton=false, withDomNode=false){
 
-            let importStyle = `bundle-text:./${_moduleName}.css`;
+            let importStyle = `./${_moduleName}.scss`;
             let importHtm = `./${_moduleName}.html`;
-            importHtm = `bundle-text:${importHtm}`;
+            importHtm = `${importHtm}`;
 
             return `"use strict";
 import Utilities from '@intersides/utilities';${withDomNode ? `\nimport style from '${importStyle}'
@@ -14,18 +13,26 @@ import htmlTemplate from '${importHtm}';
 let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleName}", '${_moduleId}');`: ``}
 
 /**
- @typedef {Object} ${_moduleName}
+ * @typedef {Object} ${_moduleName}
+ * @param {Object} props
+ * @return {${_moduleName}}
  */
 function _${_moduleName}(props){
 
-    let params = {};
+    let params = Utilities.transferParams(props, {});
+    
     ${withDomNode? `\n\tlet _vRoot = new customElementElement(style, htmlTemplate);\n`:``}
-    function _initialize(_props){
-        Utilities.transferParams(_props, params);${withDomNode? `\n\t\t\t\t_initView();`:``}
+    /**
+     *
+     * @return {${_moduleName}}
+     * @private
+     */
+    const _initialize = ()=>{
+        ${withDomNode? `\n\t\t\t\t_initView();`:``}
         _registerEvents();
         
         return this;
-    }
+    };
     ${withDomNode? `\n\tfunction _initView(){
     }
 
@@ -33,7 +40,6 @@ function _${_moduleName}(props){
      
     /**
      *@typedef {function} ${_moduleName}.getView
-     * @param {string} getView
      * @return {HTMLElement}
     */
     this.getView = ()=>{
@@ -42,7 +48,7 @@ function _${_moduleName}(props){
     `:``}
    
     /**
-     *@typedef {function} ${_moduleName}.toString
+     * @typedef {function} ${_moduleName}.toString
      * @param {number|string} _space
      * @return {string}
     */
@@ -55,7 +61,7 @@ function _${_moduleName}(props){
         }
     };
     
-    return _initialize.call(this, props);
+    return _initialize();
 }
 ${isSingleton? `\nlet singleTone = null;\n`:``}
 export let ${_moduleName} = Object.freeze({
@@ -75,52 +81,6 @@ export let ${_moduleName} = Object.freeze({
     }`}
     
 });`;},
-        //DEPRECATED:
-        v1:function(widgetElementId, widgetName){
-            let importStyle = `bundle-text:./${widgetName}.css`;
-            let importHtm = `./${widgetName}.html`;
-            importHtm = `bundle-text:${importHtm}`;
-
-            return `"use strict";
-import Utilities from '@intersides/utilities';
-import style from '${importStyle}'
-import htmlTemplate from '${importHtm}';
-
-let customElementElement = Utilities.createAndRegisterWidgetElement("${widgetName}", '${widgetElementId}');
-
-function _${widgetName}(){
-
-    let _vRoot = new customElementElement(style, htmlTemplate);
-
-    function _initialize(){
-        _initView();
-        _registerEvents();
-    }
-
-    function _initView(){
-    }
-
-    function _registerEvents(){
-    }
-
-    return Object.freeze({
-        init:_initialize,
-        exportable:Object.seal({
-            getView:()=>_vRoot
-        })
-    });
-
-}
-
-export let ${widgetName} = Object.freeze({
-    getInstance:()=>{
-        let instance = new _${widgetName}();
-        instance.init();
-        return instance.exportable;
-    }
-});`;
-        }
-    },
     playgroundJS:function(moduleName, isSingleton, withDome=false){
         return `
 import { ${moduleName} } from '../${moduleName}.mjs';
@@ -153,5 +113,5 @@ console.debug("${moduleName.toLowerCase()}Singleton :", ${moduleName.toLowerCase
 :host{}
 .${widgetName}{
 }`;
-    },
+    }
 };
