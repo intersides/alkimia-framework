@@ -7,7 +7,7 @@ module.exports = {
             importHtm = `${importHtm}`;
 
             return `"use strict";
-import Utilities from '@intersides/utilities';${withDomNode ? `\nimport style from '${importStyle}'
+import Utilities from '@intersides/utilities';${withDomNode ? `\nimport style from '${importStyle}?inline'
 import htmlTemplate from '${importHtm}?raw';
 
 let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleName}", '${_moduleId}');`: ``}
@@ -21,23 +21,19 @@ function _${_moduleName}(props){
 
     let params = Utilities.transferParams(props, {});
     
-    ${withDomNode? `\n\tlet _vRoot = new customElementElement(style, htmlTemplate);\n`:``}
+    ${withDomNode? `let _vRoot = new customElementElement(style, htmlTemplate);\n`:``}
     /**
      *
      * @return {${_moduleName}}
      * @private
      */
     const _initialize = ()=>{
-        ${withDomNode? `\n\t\t\t\t_initView();`:``}
+        ${withDomNode? `_initView();`:``}
         _registerEvents();
-        
         return this;
     };
-    ${withDomNode? `\n\tfunction _initView(){
-    }
-
-    function _registerEvents(){}
-     
+    ${withDomNode? `\n\tfunction _initView(){}
+ 
     /**
      *@typedef {function} ${_moduleName}.getView
      * @return {HTMLElement}
@@ -46,6 +42,8 @@ function _${_moduleName}(props){
         return _vRoot;
     };
     `:``}
+    
+    function _registerEvents(){}
    
     /**
      * @typedef {function} ${_moduleName}.toString
