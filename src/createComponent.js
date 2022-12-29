@@ -81,8 +81,8 @@ function createComponent(_props){
             await fs.writeFile(`${modulePath}${componentName}/${componentName}.scss`, assetsGenerator.scss);
             await fs.writeFile(`${modulePath}${componentName}/${componentName}.html`, '');
             await fs.writeFile(`${modulePath}${componentName}/playground/index.html`, assetsGenerator.playgroundHtml);
-            let config = fs.readFile("./vite.config.js", {encoding:"utf-8"});
-            await fs.writeFile(`${modulePath}${componentName}/playground/vite.config.js`, config);
+            // let config = fs.readFile(__dirname+"/vite.config.js", {encoding:"utf-8"});
+            // await fs.writeFile(`${modulePath}${componentName}/playground/vite.config.js`, config);
             nodePackage.scripts[`playground-${componentName}`] = "vite";
         }
         else{
@@ -90,18 +90,6 @@ function createComponent(_props){
         }
         nodePackage.scripts["test"] = "echo \"Error: no test specified\" && exit 1";
         await fs.writeFile(`${modulePath}${componentName}/playground/package.json`, JSON.stringify(nodePackage, null, 4)  );
-
-
-        //install the common utilities if not present
-        //let commonFile = path.join(modulePath, `common.mjs`);
-        //let utilityFile = path.join(__dirname, `Utilities.js`);
-        //if(! await fs.exists(commonFile)){
-        //    Console.warn("common utility file should be added");
-        //    let utilityFileContent = fs.readFile(utilityFile, {encoding:"utf8"});
-        //    await fs.writeFile(commonFile, utilityFileContent);
-        //}
-        //
-        //Console.log(`${modulePath}${componentName} generated!`);
 
         resolve(props);
     });

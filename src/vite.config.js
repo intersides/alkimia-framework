@@ -15,6 +15,7 @@ const htmlImport = {
     }
 };
 
+//NOTE: htmlImport does not work with builds.. ?raw it is used
 export default {
-    plugins: [ htmlImport ]
+    plugins: [ /*htmlImport*/ ]
 }

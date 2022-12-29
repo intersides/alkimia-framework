@@ -8,7 +8,7 @@ module.exports = {
 
             return `"use strict";
 import Utilities from '@intersides/utilities';${withDomNode ? `\nimport style from '${importStyle}'
-import htmlTemplate from '${importHtm}';
+import htmlTemplate from '${importHtm}?raw';
 
 let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleName}", '${_moduleId}');`: ``}
 
@@ -70,13 +70,13 @@ export let ${_moduleName} = Object.freeze({
      * @return {${_moduleName}}
      */
     ${isSingleton? `
-    getSingleton:(_props)=>{
+    getSingleton:(_props=null)=>{
         if(!singleTone){
             singleTone = _${_moduleName}.call(new (function ${_moduleName}(){}), _props);
         }
         return singleTone;
     },`:`
-    getInstance:function(_props){
+    getInstance:function(_props=null){
         return Object.seal(_${_moduleName}.call(new (function ${_moduleName}(){}), _props));
     }`}
     

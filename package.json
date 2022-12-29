@@ -6,20 +6,18 @@
     "bin": "cli.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "compile-scss": "npm run compile-scss",
         "cli": "node cli.js --srcDir=apptest --env=test"
     },
     "author": "InterSides",
     "license": "ISC",
     "dependencies": {
         "@intersides/console": "^1.0.1",
-        "@intersides/utilities": "^1.0.10",
+        "@intersides/utilities": "^1.0.18",
         "js-better-fs": "^1.0.0",
         "prompts": "^2.4.2",
         "short-uuid": "^4.2.0"
     },
     "devDependencies": {
-        "sass": "^1.54.4",
         "vite": "^3.2.5"
     }
 }
