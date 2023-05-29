@@ -1,16 +1,16 @@
 
 module.exports = {
-    moduleMaker:function(_moduleId, _moduleName, isSingleton=false, withDomNode=false){
+    moduleMaker:function(_moduleId, _moduleName, withDomNode=false) {
 
-            let importStyle = `./${_moduleName}.scss`;
-            let importHtm = `./${_moduleName}.html`;
-            importHtm = `${importHtm}`;
+        let importStyle = `./${_moduleName}.scss`;
+        let importHtm = `./${_moduleName}.html`;
+        importHtm = `${importHtm}`;
 
-            return `"use strict";
+        return `"use strict";
 import Utilities from '@intersides/utilities';${withDomNode ? `\nimport style from '${importStyle}?inline'
 import htmlTemplate from '${importHtm}?raw';
 
-let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleName}", '${_moduleId}');`: ``}
+let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleName}", '${_moduleId}');` : ``}
 
 /**
  * @typedef {Object} ${_moduleName}
@@ -21,18 +21,18 @@ function _${_moduleName}(props){
 
     let params = Utilities.transferParams(props, {});
     
-    ${withDomNode? `let _vRoot = new customElementElement(style, htmlTemplate);\n`:``}
+    ${withDomNode ? `let _vRoot = new customElementElement(style, htmlTemplate);\n` : ``}
     /**
      *
-     * @return {${_moduleName}}
+     * @return {_${_moduleName}}
      * @private
      */
     const _initialize = ()=>{
-        ${withDomNode? `_initView();`:``}
+        ${withDomNode ? `_initView();` : ``}
         _registerEvents();
         return this;
     };
-    ${withDomNode? `\n\tfunction _initView(){}
+    ${withDomNode ? `\n\tfunction _initView(){}
  
     /**
      *@typedef {function} ${_moduleName}.getView
@@ -41,7 +41,7 @@ function _${_moduleName}(props){
     this.getView = ()=>{
         return _vRoot;
     };
-    `:``}
+    ` : ``}
     
     function _registerEvents(){}
    
@@ -61,25 +61,31 @@ function _${_moduleName}(props){
     
     return _initialize();
 }
-${isSingleton? `\nlet singleTone = null;\n`:``}
+\nlet singleTone = null;\n
 export let ${_moduleName} = Object.freeze({
     /**
      * @param {Object}_props
-     * @return {${_moduleName}}
+     * @return {_${_moduleName}}
      */
-    ${isSingleton? `
     getSingleton:(_props=null)=>{
         if(!singleTone){
             singleTone = _${_moduleName}.call(new (function ${_moduleName}(){}), _props);
         }
         return singleTone;
-    },`:`
+    },
+    
+    /**
+     * @param {Object}_props
+     * @return {_${_moduleName}}
+     */
     getInstance:function(_props=null){
         return Object.seal(_${_moduleName}.call(new (function ${_moduleName}(){}), _props));
-    }`}
+    }
     
-});`;},
-    playgroundJS:function(moduleName, isSingleton, withDome=false){
+});`
+
+;},
+    playgroundJS:function(moduleName, withDome=false){
         return `
 import { ${moduleName} } from '../${moduleName}.mjs';
 
@@ -87,9 +93,9 @@ ${withDome ?
 /*generate the module with a basic app container to attach to it*/
 `const _vApp = document.createElement("app");
 document.body.appendChild(_vApp);\n
-let ${moduleName.toLowerCase()}Widget = ${moduleName}.${isSingleton === true ? "getSingleton":"getInstance"}();
+let ${moduleName.toLowerCase()}Widget = ${moduleName}.getInstance();
 _vApp.appendChild(${moduleName.toLowerCase()}Widget.getView());`:/*without html view*/`
-const ${moduleName.toLowerCase()}Singleton = ${moduleName}.${isSingleton === true ? "getSingleton":"getInstance"}();
+const ${moduleName.toLowerCase()}Singleton = ${moduleName}.getInstance();
 console.debug("${moduleName.toLowerCase()}Singleton :", ${moduleName.toLowerCase()}Singleton);
 `}`
     },

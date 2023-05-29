@@ -46,13 +46,6 @@ function createComponent(_props){
 
         console.log("component will be named as:", componentName);
 
-        const asSingletonChoice =  await prompts({
-            type:"confirm",
-            name:"singleton",
-            message:`Is a singleton`,
-            initial:false
-        });
-
         const includeDom =  await prompts({
             type:"confirm",
             name:"withDom",
@@ -65,7 +58,6 @@ function createComponent(_props){
         let assetsGenerator = moduleGenerator({
             name:componentName,
             playgroundDir,
-            isSingleton:asSingletonChoice["singleton"] || false,
             withDome:includeDom["withDom"] || false
         });
 
@@ -100,7 +92,6 @@ function moduleGenerator(_params){
     let params = {
         name:null,
         playgroundDir:null,
-        isSingleton:false,
         withDome:false
     };
 
@@ -114,10 +105,10 @@ function moduleGenerator(_params){
     const moduleName = params.name[0].toUpperCase() + params.name.substring(1);
 
     return {
-        js: moduleMaker(moduleElementId, moduleName, params.isSingleton, params.withDome),
+        js: moduleMaker(moduleElementId, moduleName, params.withDome),
         scss:scss(moduleName),
         playgroundHtml:playgroundHtml(moduleName),
-        playgroundJS:playgroundJS(moduleName, params.isSingleton, params.withDome)
+        playgroundJS:playgroundJS(moduleName, params.withDome)
     }
 }
 
