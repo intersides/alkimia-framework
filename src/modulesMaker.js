@@ -44,20 +44,6 @@ function _${_moduleName}(props){
     ` : ``}
     
     function _registerEvents(){}
-   
-    /**
-     * @typedef {function} ${_moduleName}.toString
-     * @param {number|string} _space
-     * @return {string}
-    */
-    this.toString = (_space)=>{
-        if(_space){
-            return JSON.stringify(this, null, _space);
-        }
-        else{
-            return JSON.stringify(this);
-        }
-    };
     
     return _initialize();
 }
