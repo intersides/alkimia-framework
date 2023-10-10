@@ -20,7 +20,10 @@ function _${_moduleName}(props){
 
     let params = Utilities.transferParams(props, {});
     
-    ${withDomNode ? `let _vRoot = new customElementElement(style, htmlTemplate);\n` : ``}
+    ${withDomNode ?`let _vRoot = new customElementElement(style, htmlTemplate);
+    let _vParent = null;
+    ` : ``}
+    
     /**
      *
      * @return {_${_moduleName}}
@@ -31,11 +34,23 @@ function _${_moduleName}(props){
         _registerEvents();
         return this;
     };
-    ${withDomNode ? `\n\tfunction _initView(){}
- 
+    ${withDomNode ?`function _initView(){}
+    
+    this.isAttached = function(){
+        return _vParent !== null;
+    };
+
+    /**
+     * @param {HTMLElement} _parent
+     */
+    this.appendTo = (_parent)=>{
+        _vParent = _parent;
+        _vParent.appendChild(this.getView());
+    };
+    
     /**
      * @return {HTMLElement}
-    */
+     */
     this.getView = ()=>{
         return _vRoot;
     };
