@@ -13,9 +13,8 @@ import htmlTemplate from '${importHtm}?raw';
 let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleName}", '${_moduleId}');` : ``}
 
 /**
- * @typedef {Object} ${_moduleName}
  * @param {Object} props
- * @return {${_moduleName}}
+ * @return {_${_moduleName}}
  */
 function _${_moduleName}(props){
 
@@ -35,7 +34,6 @@ function _${_moduleName}(props){
     ${withDomNode ? `\n\tfunction _initView(){}
  
     /**
-     *@typedef {function} ${_moduleName}.getView
      * @return {HTMLElement}
     */
     this.getView = ()=>{
@@ -48,6 +46,11 @@ function _${_moduleName}(props){
     return _initialize();
 }
 \nlet singleTone = null;\n
+
+/**
+ *
+ * @type {Readonly<{getInstance: (function(Object=): _${_moduleName})}>}
+ */
 export let ${_moduleName} = Object.freeze({
     /**
      * @param {Object}_props
