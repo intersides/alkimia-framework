@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const Alkimia = require("./index");
-const Utilities = require("@intersides/utilities");
+const Utilities = require("@alkimia/utilities");
 
 //TODO: move it into the InterSides utilities package ?
 function extractOptionalArguments(_optionName) {

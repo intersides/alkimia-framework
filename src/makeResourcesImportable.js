@@ -1,6 +1,6 @@
 let fs  = require("fs");
 let path = require("path");
-let Utilities = require("@intersides/utilities");
+let Utilities = require("@alkimia/utilities");
 
 function *retrieveStylesAndTemplates(_path){
     let result = fs.readdirSync(_path, {withFileTypes:true});

@@ -6,87 +6,76 @@ module.exports = {
         let importHtm = `./${_moduleName}.html`;
         importHtm = `${importHtm}`;
 
-        return `"use strict";
-import Utilities from '@intersides/utilities';${withDomNode ? `\nimport style from '${importStyle}?inline'
-import htmlTemplate from '${importHtm}?raw';
+        return `import Utilities from '@alkimia/utilities';
+${withDomNode ? `import style from '${importStyle}?inline'
+import htmlTemplate from '${importHtm}?raw';` : ``}
 
-let customElementElement = Utilities.createAndRegisterWidgetElement("${_moduleName}", '${_moduleId}');` : ``}
+export default function ${_moduleName}(args){
 
-/**
- * @param {Object} props
- * @return {_${_moduleName}}
- */
-function _${_moduleName}(props){
-
-    let params = Utilities.transferParams(props, {});
+    const params = Utilities.transferParams(args, {});
     
-    ${withDomNode ?`let _vRoot = new customElementElement(style, htmlTemplate);
-    let _vParent = null;
-    ` : ``}
+    const instance = Object.create(${_moduleName}.prototype);
+    ${withDomNode ? `
+    const _customElement = Utilities.createAndRegisterWidgetElement("${_moduleName}");
+    const _shadow = new _customElement(style, htmlTemplate);
+    instance.element = _shadow;
+    let _vParent = null;`: ``}
     
-    /**
-     *
-     * @return {_${_moduleName}}
-     * @private
-     */
+   /**
+   *
+   * @return {${_moduleName}}
+   * @private
+   */
     const _initialize = ()=>{
         ${withDomNode ? `_initView();` : ``}
         _registerEvents();
-        return this;
+        
+        return instance;
     };
-    ${withDomNode ?`function _initView(){}
+    ${withDomNode ?`
+    function _initView(){}
     
-    this.isAttached = function(){
+    instance.isAttached = function(){
         return _vParent !== null;
     };
 
     /**
      * @param {HTMLElement} _parent
      */
-    this.appendTo = (_parent)=>{
+    instance.appendTo = (_parent)=>{
         _vParent = _parent;
-        _vParent.appendChild(this.getView());
+        _vParent.appendChild(instance.element);
     };
     
     /**
      * @return {HTMLElement}
      */
-    this.getView = ()=>{
-        return _vRoot;
-    };
-    ` : ``}
+    instance.getView = ()=>{
+        return _shadow;
+    };` : ``}
     
     function _registerEvents(){}
     
     return _initialize();
 }
-\nlet singleTone = null;\n
 
 /**
  *
- * @type {Readonly<{getInstance: (function(Object=): _${_moduleName})}>}
+ * @type {${_moduleName}}
+ * @private
  */
-export let ${_moduleName} = Object.freeze({
-    /**
-     * @param {Object}_props
-     * @return {_${_moduleName}}
-     */
-    getSingleton:(_props=null)=>{
-        if(!singleTone){
-            singleTone = _${_moduleName}.call(new (function ${_moduleName}(){}), _props);
-        }
-        return singleTone;
-    },
-    
-    /**
-     * @param {Object}_props
-     * @return {_${_moduleName}}
-     */
-    getInstance:function(_props=null){
-        return Object.seal(_${_moduleName}.call(new (function ${_moduleName}(){}), _props));
-    }
-    
-});`
+let _instance = null;
+
+${_moduleName}.getSingleton = function(_args=null) {
+  if(!_instance){
+    _instance = ${_moduleName}(_args);
+  }
+  return _instance;
+};
+
+${_moduleName}.getInstance = function(_args) {
+  return ${_moduleName}(_args);
+};`
 
 ;},
     playgroundJS:function(moduleName, withDome=false){

@@ -2,7 +2,7 @@
 const prompts = require('prompts');
 const fs = require('js-better-fs');
 const path = require('path');
-const Utilities = require("@intersides/utilities");
+const Utilities = require("@alkimia/utilities");
 const Console = require("@intersides/console");
 const {moduleMaker, scss, playgroundHtml, playgroundJS} = require("./modulesMaker");
 
