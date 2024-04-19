@@ -3,7 +3,6 @@ const prompts = require('prompts');
 const fs = require('js-better-fs');
 const path = require('path');
 const Utilities = require("@alkimia/utilities");
-const Console = require("@intersides/console");
 const {moduleMaker, scss, playgroundHtml, playgroundJS} = require("./modulesMaker");
 
 function createComponent(_props){
@@ -61,8 +60,8 @@ function createComponent(_props){
             withDome:includeDom["withDom"] || false
         });
 
-        await fs.writeFile(`${modulePath}${componentName}/${componentName}.mjs`, assetsGenerator.js);
-        await fs.writeFile(`${modulePath}${componentName}/playground/index.mjs`, assetsGenerator.playgroundJS);
+        await fs.writeFile(`${modulePath}${componentName}/${componentName}.js`, assetsGenerator.js);
+        await fs.writeFile(`${modulePath}${componentName}/playground/index.js`, assetsGenerator.playgroundJS);
 
         await fs.createDir(`${modulePath}${componentName}/playground`);
         let nodePackage = {
@@ -73,12 +72,10 @@ function createComponent(_props){
             await fs.writeFile(`${modulePath}${componentName}/${componentName}.scss`, assetsGenerator.scss);
             await fs.writeFile(`${modulePath}${componentName}/${componentName}.html`, '');
             await fs.writeFile(`${modulePath}${componentName}/playground/index.html`, assetsGenerator.playgroundHtml);
-            // let config = fs.readFile(__dirname+"/vite.config.js", {encoding:"utf-8"});
-            // await fs.writeFile(`${modulePath}${componentName}/playground/vite.config.js`, config);
             nodePackage.scripts[`playground-${componentName}`] = "vite";
         }
         else{
-            nodePackage.scripts[`playground-${componentName}`] = "node ./index.mjs";
+            nodePackage.scripts[`playground-${componentName}`] = "node ./index.js";
         }
         nodePackage.scripts["test"] = "echo \"Error: no test specified\" && exit 1";
         await fs.writeFile(`${modulePath}${componentName}/playground/package.json`, JSON.stringify(nodePackage, null, 4)  );

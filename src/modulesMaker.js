@@ -6,19 +6,18 @@ module.exports = {
         let importHtm = `./${_moduleName}.html`;
         importHtm = `${importHtm}`;
 
-        return `import Utilities from '@alkimia/utilities';
-${withDomNode ? `import style from '${importStyle}?inline'
-import htmlTemplate from '${importHtm}?raw';` : ``}
+        return `import Utilities from "@alkimia/utilities";
+${withDomNode ? `import style from "${importStyle}?inline"
+import htmlTemplate from "${importHtm}?raw";` : ``}
 
 export default function ${_moduleName}(args){
 
-    const params = Utilities.transferParams(args, {});
+    const _params = Utilities.transferParams(args, {});
     
     const instance = Object.create(${_moduleName}.prototype);
     ${withDomNode ? `
     const _customElement = Utilities.createAndRegisterWidgetElement("${_moduleName}");
-    const _shadow = new _customElement(style, htmlTemplate);
-    instance.element = _shadow;
+    instance.element = new _customElement(style, htmlTemplate);
     let _vParent = null;`: ``}
     
    /**
@@ -36,22 +35,14 @@ export default function ${_moduleName}(args){
     function _initView(){}
     
     instance.isAttached = function(){
-        return _vParent !== null;
+        return instance.element.parentNode !== null;
     };
 
     /**
      * @param {HTMLElement} _parent
      */
     instance.appendTo = (_parent)=>{
-        _vParent = _parent;
-        _vParent.appendChild(instance.element);
-    };
-    
-    /**
-     * @return {HTMLElement}
-     */
-    instance.getView = ()=>{
-        return _shadow;
+      _parent.appendChild(instance.element);
     };` : ``}
     
     function _registerEvents(){}
@@ -79,17 +70,15 @@ ${_moduleName}.getInstance = function(_args) {
 
 ;},
     playgroundJS:function(moduleName, withDome=false){
-        return `
-import { ${moduleName} } from '../${moduleName}.mjs';
-
+        return `import ${moduleName} from "../${moduleName}.js";
 ${withDome ? 
 /*generate the module with a basic app container to attach to it*/
 `const _vApp = document.createElement("app");
 document.body.appendChild(_vApp);\n
 let ${moduleName.toLowerCase()}Widget = ${moduleName}.getInstance();
-_vApp.appendChild(${moduleName.toLowerCase()}Widget.getView());`:/*without html view*/`
-const ${moduleName.toLowerCase()}Singleton = ${moduleName}.getInstance();
-console.debug("${moduleName.toLowerCase()}Singleton :", ${moduleName.toLowerCase()}Singleton);
+_vApp.appendChild(${moduleName.toLowerCase()}Widget.element);`:/*without html view*/`
+const ${moduleName.toLowerCase()}Instance = ${moduleName}.getInstance();
+console.debug("${moduleName.toLowerCase()}Instance :", ${moduleName.toLowerCase()}Instance);
 `}`
     },
     playgroundHtml:function(widgetName){
@@ -101,7 +90,7 @@ console.debug("${moduleName.toLowerCase()}Singleton :", ${moduleName.toLowerCase
     <title>${widgetName}</title>
 </head>
 <body>
-<script type="module" src="index.mjs"></script>
+<script type="module" src="index.js"></script>
 </body>
 </html>`
     },
