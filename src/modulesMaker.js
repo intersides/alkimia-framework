@@ -7,7 +7,7 @@ module.exports = {
         importHtm = `${importHtm}`;
 
         return `import Utilities from "@alkimia/utilities";
-${withDomNode ? `import style from "${importStyle}?inline"
+${withDomNode ? `import style from "${importStyle}?inline";
 import htmlTemplate from "${importHtm}?raw";` : ``}
 
 export default function ${_moduleName}(args){
