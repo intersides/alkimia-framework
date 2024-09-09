@@ -6,7 +6,7 @@
   "bin": "cli.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cli": "node cli.js --srcDir=apptest --env=test"
+    "cli": "node cli.js --srcDir=apptest --env=test --withPlayground=true"
   },
   "author": "InterSides",
   "license": "ISC",

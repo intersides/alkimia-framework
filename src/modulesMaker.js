@@ -1,6 +1,6 @@
 
 module.exports = {
-    moduleMaker:function(_moduleId, _moduleName, withDomNode=false) {
+    moduleMaker:function(_moduleId, _moduleName, withDomNode=false, withPlayground=false) {
 
         let importStyle = `./${_moduleName}.scss`;
         let importHtm = `./${_moduleName}.html`;
@@ -69,14 +69,14 @@ ${_moduleName}.getInstance = function(_args) {
 };`
 
 ;},
-    playgroundJS:function(moduleName, withDome=false){
+    playgroundJS:function(moduleName, withDom=false){
         return `import ${moduleName} from "../${moduleName}.js";
-${withDome ? 
+${withDom ? 
 /*generate the module with a basic app container to attach to it*/
 `const _vApp = document.createElement("app");
 document.body.appendChild(_vApp);\n
-let ${moduleName.toLowerCase()}Widget = ${moduleName}.getInstance();
-_vApp.appendChild(${moduleName.toLowerCase()}Widget.element);`:/*without html view*/`
+let ${moduleName.toLowerCase()} = ${moduleName}.getInstance();
+_vApp.appendChild(${moduleName.toLowerCase()}.element);`:/*without html view*/`
 const ${moduleName.toLowerCase()}Instance = ${moduleName}.getInstance();
 console.debug("${moduleName.toLowerCase()}Instance :", ${moduleName.toLowerCase()}Instance);
 `}`

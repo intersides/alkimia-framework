@@ -8,4 +8,4 @@ module.exports = {
     bundleUp:(params)=>{
         return prepareBundle(params);
     }
-}
+};
