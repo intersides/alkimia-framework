@@ -4,5 +4,8 @@ update-package:
 _update-package-no-commit:
 	git add . && npm version patch && npm publish
 
+patch_and_publish:
+	npm version patch && npm publish
+
 update-package-no-commit:
 	npm publish
