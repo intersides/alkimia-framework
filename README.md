@@ -3,7 +3,7 @@
 
 ## Overview
 
-The **Alkimia Framework CLI** is a powerful command-line tool designed to enhance the development experience within the Alkimia framework. Alkimia is a JavaScript framework that strives to minimize abstraction, encouraging developers to work directly with JavaScript and the HTML DOM. Unlike frameworks such as React, Alkimia emphasizes simplicity and direct manipulation of the DOM, making it easier to build dynamic web applications without the overhead of heavy abstractions.
+The **Alkimia Framework CLI** is a command-line tool designed to enhance the development experience within the Alkimia framework. Alkimia is a JavaScript framework that strives to minimize abstraction, encouraging developers to work directly with JavaScript and the HTML DOM. Unlike frameworks such as React, Alkimia emphasizes simplicity and direct manipulation of the DOM, making it easier to build dynamic web applications without the overhead of heavy abstractions.
 
 ### Key Principles
 
