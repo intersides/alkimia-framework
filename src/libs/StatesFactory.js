@@ -5,7 +5,14 @@ let elementAttributes = {
     name: "innerText",
     type: [String, Number, Boolean],
   },
-  innerhtml: null,
+  innerhtml: {
+    name: "innerHTML",
+    type: [HTMLElement],
+  },
+  children: {
+    name: "children",
+    type: ["HTMLElements"],
+  },
   outerhtml: null,
   outertext: null,
   classname: null,
@@ -184,35 +191,6 @@ let elementAttributes = {
  *
  * @param {HTMLElement} element
  * @param attribute
- * @return {any}
- * @constructor
- */
-const GetPropertyForAttribute = function (element, attribute) {
-  // element.innerText = value;
-  let property = null;
-  switch (attribute) {
-    case BindableElementAttribute.innertext:
-    case BindableElementAttribute.innertext.name:
-      {
-        property = element["innerText"];
-      }
-      break;
-    case BindableElementAttribute["style.color"]:
-    case BindableElementAttribute["style.color"].name:
-      property = element.style.color;
-      break;
-    default: {
-      console.error("Invalid attribute:", attribute);
-    }
-  }
-
-  return property;
-};
-
-/**
- *
- * @param {HTMLElement} element
- * @param attribute
  * @param {any} value
  * @return {null}
  * @constructor
@@ -229,6 +207,21 @@ const SetPropertyForAttribute = function (element, attribute, value) {
       element.style.color = value;
       break;
 
+    case BindableElementAttribute.innerhtml:
+    case BindableElementAttribute.innerhtml.name:
+      {
+        console.log(value);
+        element[BindableElementAttribute.innerhtml.name] = value;
+      }
+      break;
+
+    case BindableElementAttribute.children:
+    case BindableElementAttribute.children.name:
+      {
+        element.replaceChildren(...value);
+      }
+      break;
+
     default: {
       console.error("Invalid attribute:", attribute);
     }
@@ -240,18 +233,31 @@ const SetPropertyForAttribute = function (element, attribute, value) {
 export const BindableElementAttribute = { ...elementAttributes };
 
 /**
+ * @typedef {Object} ElementStateParameter
+ * @property {HTMLElement} element - The DOM element to bind the value.
+ * @property {string} attribute - the attribute name that should match BindableElementAttribute list .
+ * @property {String|Number|Boolean|Object|Array|null} initialValue -default value.
+ * @property {function(HTMLElement): void} transformer - apply a transformation to the value
+ */
+
+/**
  *
- * @param {HTMLElement} element
- * @param {BindableElementAttribute|String} bindableElementAttribute
- * @param {any} defaultValue
- * @return {( {value: null, bindTo: *}| _setter )[]}
+ * @param {ElementStateParameter} _elementStateParameters
+ * @return {[{value: null},function(*): void]}
  * @constructor
  */
-export function ElementState(
-  element,
-  bindableElementAttribute,
-  defaultValue = null,
-) {
+export function ElementState(_elementStateParameters) {
+  let props = Utilities.transferParams(_elementStateParameters, {
+    element: null,
+    attribute: null,
+    initialValue: null,
+    transformer: (value) => {
+      return value;
+    },
+  });
+
+  console.log("*", props);
+
   const _newBindTo = (_element, attributeToBind) => {
     let element = _element;
 
@@ -261,30 +267,19 @@ export function ElementState(
       },
       {
         get: (target, prop, receiver) => {
-          if (prop === "value") {
-            console.log(element, attributeToBind);
-
-            const attr = GetPropertyForAttribute(element, attributeToBind);
-            console.log(attr);
-
-            if (attributeToBind === BindableElementAttribute["style.color"]) {
-              return element.style.color;
-            } else {
-              return element[attributeToBind];
-            }
-          }
           return Reflect.get(target, prop, receiver);
         },
         set: (target, prop, value, receiver) => {
           if (prop === "value" && value !== undefined) {
-            console.log("el:", element, "attr:", attributeToBind, value);
+            // console.log("el:", element, "attr:", attributeToBind, value);
 
-            const result = SetPropertyForAttribute(
+            const success = SetPropertyForAttribute(
               element,
               attributeToBind,
-              value,
+              props.transformer(value),
             );
-            console.log(result);
+
+            target[prop] = value;
           }
           return true;
         },
@@ -294,8 +289,8 @@ export function ElementState(
     //TODO: check that the attribute to be pounded to is coherent for the type of element. Ex: innerText is used in any HtmlElement but alt is only used in:area, img & input
     // property = element[attributeToBind];
 
-    if (defaultValue !== undefined) {
-      _valueProxy.value = defaultValue;
+    if (props.initialValue !== undefined) {
+      _valueProxy.value = props.initialValue;
     }
 
     return [
@@ -306,5 +301,5 @@ export function ElementState(
     ];
   };
 
-  return _newBindTo(element, bindableElementAttribute);
+  return _newBindTo(props.element, props.attribute);
 }
