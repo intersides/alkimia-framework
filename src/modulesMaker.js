@@ -1,53 +1,133 @@
+import {warn} from "mocha/lib/errors.js";
 
-module.exports = {
-    moduleMaker:function(_moduleId, _moduleName, withDomNode=false, withPlayground=false) {
+export default {
 
-        let importStyle = `./${_moduleName}.scss`;
-        let importHtm = `./${_moduleName}.html`;
-        importHtm = `${importHtm}`;
+  moduleMaker: function(
+    _moduleId,
+    _moduleName,
+    withDomNode = false,
+    withPlayground = false,
+    withStatesSample = false
+  ) {
 
-        return `import Utilities from "@alkimia/utilities";
-${withDomNode ? `import style from "${importStyle}?inline";
-import htmlTemplate from "${importHtm}?raw";` : ``}
+    const importStyle = `./${_moduleName}.scss`;
+    let importHtm = `./${_moduleName}.html`;
+    importHtm = `${importHtm}`;
+
+    return `import Alkimia from "@alkimia/utilities";
+const Utilities = Alkimia.Utilities;${withDomNode ? `
+import style from "${importStyle}?inline";
+import htmlTemplate from "${importHtm}?raw";${withStatesSample ? `
+const {
+  ElementState
+} = Alkimia.StateFactory;
+` : ""} ` : ""
+}
 
 export default function ${_moduleName}(args){
 
-    const _params = Utilities.transferParams(args, {});
+  const _params = Utilities.transfer(args, {});
     
-    const instance = Object.create(${_moduleName}.prototype);
-    ${withDomNode ? `
-    const _customElement = Utilities.createAndRegisterWidgetElement("${_moduleName}");
-    instance.element = new _customElement(style, htmlTemplate);
-    let _vParent = null;`: ``}
+  const instance = Object.create(${_moduleName}.prototype);
+    ${
+  withDomNode
+    ? `
+  const _customElement = Utilities.browser.createAndRegisterWidgetElement("${_moduleName}");
+  instance.element = new _customElement(style, htmlTemplate);
     
-   /**
-   *
-   * @return {${_moduleName}}
-   * @private
-   */
-    const _initialize = ()=>{
-        ${withDomNode ? `_initView();` : ``}
-        _registerEvents();
+  function _onAppended() {
+    console.log("_onAppended should be delegated");
+  }
+  ${ withStatesSample ? `
+  let [counter, setCounter] = [null, (_event) => {}];
+  let [list, setList] = [null, (_color) => {}];
+    
+  //children elements
+  let $input = null,
+      $counter = null,
+      $list = null,
+      $listItemTemplate = null;
+  ` : ""}
+  let _vParent = null;
+  ` : ""
+}
+  /**
+  *
+  * @return {${_moduleName}}
+  * @private
+  */
+  const _initialize = ()=>{
+    ${withDomNode ? "_initView();" : ""}
+    _registerEvents();
+    
+    return instance;
+  };
+  ${
+  withDomNode
+    ? `
+  function _initView(){
+    ${ withStatesSample ? `
+    $input = instance.element.view.querySelector("input");
+    $counter = instance.element.view.querySelector("#counter_value");
+    $list = instance.element.view.querySelector("ul");
+    $listItemTemplate = instance.element.view.querySelector(".list_item_template");
+      
+    [counter, setCounter] = new ElementState({
+      element: $counter,
+      attribute: ElementState.BindableAttribute.innertext.name,
+      initialValue: 0
+    });
         
-        return instance;
-    };
-    ${withDomNode ?`
-    function _initView(){}
+    [list, setList] = new ElementState({
+      element: $list,
+      attribute: ElementState.BindableAttribute.children,
+      initialValue: [],
+      transformer: (list) => {
+        if (list) {
+          return list.map((_listItem) => {
+            const listItemTemplate = $listItemTemplate.cloneNode(true);
+            listItemTemplate.innerText = _listItem;
+            return listItemTemplate;
+          });
+        } 
+        else {
+          return [];
+        }
+      }
+    });
+    ` : ""}
+  }
     
-    instance.isAttached = function(){
-        return instance.element.parentNode !== null;
-    };
+  instance.isAttached = function(){
+    return instance.element.parentNode !== null;
+  };
 
-    /**
-     * @param {HTMLElement} _parent
-     */
-    instance.appendTo = (_parent)=>{
-      _parent.appendChild(instance.element);
-    };` : ``}
+  /**
+   * @param {HTMLElement} _parent
+   */
+  instance.appendTo = (_parent)=>{
+    _parent.appendChild(instance.element);
+    _vParent = _parent;
+    _onAppended();
+  };` : ""
+}
     
-    function _registerEvents(){}
+  function _registerEvents(){
+    ${
+  withDomNode ? `_onAppended = () => {
+      ${ withStatesSample ? "$input.value = counter.value; //from initialValue" : "" }
+    };
+    ${ withStatesSample ? `
+    if($input){
+      $input.addEventListener("change", (evt) => {
+        setCounter(evt.target.value);
+        setList([...list.value, evt.target.value]);
+      });
+    }
+    ` : ""} `: ""}
+  }
     
-    return _initialize();
+  return _initialize();
 }
 
 /**
@@ -66,23 +146,27 @@ ${_moduleName}.getSingleton = function(_args=null) {
 
 ${_moduleName}.getInstance = function(_args) {
   return ${_moduleName}(_args);
-};`
-
-;},
-    playgroundJS:function(moduleName, withDom=false){
-        return `import ${moduleName} from "../${moduleName}.js";
-${withDom ? 
-/*generate the module with a basic app container to attach to it*/
-`const _vApp = document.createElement("app");
+};
+`;
+  },
+  playgroundJS: function(moduleName, withDom = false) {
+    return `import ${moduleName} from "../${moduleName}.js";
+${
+  withDom
+    ? /*generate the module with a basic app container to attach to it*/
+    `const _vApp = document.createElement("app");
 document.body.appendChild(_vApp);\n
 let ${moduleName.toLowerCase()} = ${moduleName}.getInstance();
-_vApp.appendChild(${moduleName.toLowerCase()}.element);`:/*without html view*/`
+${moduleName.toLowerCase()}.appendTo(_vApp);`
+    : /*without HTML view*/ `
 const ${moduleName.toLowerCase()}Instance = ${moduleName}.getInstance();
 console.debug("${moduleName.toLowerCase()}Instance :", ${moduleName.toLowerCase()}Instance);
-`}`
-    },
-    playgroundHtml:function(widgetName){
-        return `
+`
+}
+`;
+  },
+  playgroundHtml: function(widgetName) {
+    return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,12 +176,45 @@ console.debug("${moduleName.toLowerCase()}Instance :", ${moduleName.toLowerCase(
 <body>
 <script type="module" src="index.js"></script>
 </body>
-</html>`
-    },
-    scss:function (widgetName){
-        return `
+</html>
+`;
+  },
+  html:function(widgetName, withStatesSample){
+    let html = "";
+    if(withStatesSample){
+      html = `<section>
+	<label>
+		<span>my input</span>
+		<input type="number" id="counter_input" min="0" max="100" step="1" />
+	</label>
+</section>
+
+<section>
+	<p>counter <span id="counter_value">abc</span></p>
+
+	<div>
+		<label>
+			<span>counter list</span>
+		</label>
+		<ul>
+			<li class="list_item_template">0</li>
+		</ul>
+	</div>
+
+	<label>
+		<span>list</span>
+	</label>
+
+</section>`;
+    }
+    return html;
+
+  },
+  scss: function(widgetName) {
+    return `
 :host{}
 .${widgetName}{
-}`;
-    }
+}
+`;
+  }
 };

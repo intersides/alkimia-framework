@@ -35,7 +35,7 @@ alkimia-framework-cli/
 │       ├── InputElement.html
 │       ├── InputElement.scss
 │       └── playground/
-│           ├── index.js
+│           ├── index.mjs
 │           └── package.json
 ├── src/
 │   ├── createComponent.js
@@ -43,7 +43,7 @@ alkimia-framework-cli/
 │       └── StatesFactory.js
 │   └── makeResourcesImportable.js
 ├── cli.js
-├── index.js
+├── index.mjs
 └── README.md
 ```
 
@@ -87,12 +87,9 @@ If you wish to contribute to the Alkimia Framework CLI, please follow the guidel
 
 ## Authors
 
-- [Author Name](https://github.com/author) - *Initial work*
+- [InterSides (Marco Falsitta)](https://github.com/intersides) - *Initial work*
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-`````
-...
-`````

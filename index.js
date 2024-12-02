@@ -1,11 +1,11 @@
-const createComponent = require("./src/createComponent");
-const prepareBundle = require("./src/makeResourcesImportable");
+import createComponent from "./src/createComponent.js";
+import prepareBundle from "./src/makeResourcesImportable.js";
 
-module.exports = {
-    generateModule:(_props)=>{
-        return createComponent(_props);
-    },
-    bundleUp:(params)=>{
-        return prepareBundle(params);
-    }
+export default {
+  generateModule: (_props) => {
+    return createComponent(_props);
+  },
+  bundleUp: (params) => {
+    return prepareBundle(params);
+  }
 };

@@ -1,23 +1,29 @@
 "use strict";
-const prompts = require("prompts");
-const fs = require("js-better-fs");
-const path = require("path");
-const Utilities = require("@alkimia/utilities");
+import prompts from "prompts";
+import fs from "js-better-fs";
+import path from "path";
+import ModulesMaker from "./modulesMaker.js";
+
 const {
   moduleMaker,
+  html,
   scss,
   playgroundHtml,
   playgroundJS
-} = require("./modulesMaker");
+} = ModulesMaker;
 
-function createComponent(_props){
-  let props = {
+
+import Alkimia from "@alkimia/utilities";
+const Utilities = Alkimia.Utilities;
+
+export default function createComponent(_props){
+  const props = {
     srcDir: "app",
     env: "test",
     withPlayground: false
   };
 
-  Utilities.transferParams(_props, props);
+  Utilities.transfer(_props, props);
 
   return new Promise(async(resolve, reject) => {
 
@@ -28,17 +34,17 @@ function createComponent(_props){
       initial: props.srcDir || "src"
     });
 
-    let modulePath = path.join(process.cwd(), `${dirResponse.dir}/`);
+    const modulePath = path.join(process.cwd(), `${dirResponse.dir}/`);
 
     const nameResponse = await prompts({
       type: "text",
       name: "componentName",
-      message: `Name`
+      message: "Name"
     });
 
     //cleanup the name
     let componentName = "";
-    let nameParts = nameResponse["componentName"].trim().split(" ");
+    const nameParts = nameResponse["componentName"].trim().split(" ");
     if(nameParts.length > 1){
       nameParts.forEach(_part => {
         _part = _part.trim();
@@ -56,21 +62,36 @@ function createComponent(_props){
     const includeDom = await prompts({
       type: "confirm",
       name: "withDom",
-      message: `Needs a dom`,
+      message: "Needs a dom",
       initial: false
     });
 
-
-    let assetsGenerator = moduleGenerator({
-      name: componentName,
-      withPlayground:props.withPlayground,
-      withDom: includeDom["withDom"] || false
+    const includePlayground = await prompts({
+      type: "confirm",
+      name: "withPlayground",
+      message: "Include playgorund",
+      initial: false
     });
+
+    const includeStatesSample = await prompts({
+      type: "confirm",
+      name: "withStatesSample",
+      message: "Include States Sample",
+      initial: false
+    });
+
+    const assetsGenerator = moduleGenerator({
+      name: componentName,
+      withPlayground:includePlayground["withPlayground"] || false,
+      withDom: includeDom["withDom"] || false,
+      withStatesSample:includeStatesSample["withStatesSample"] || false
+    });
+   
 
     await fs.writeFile(`${modulePath}${componentName}/${componentName}.js`, assetsGenerator.js);
 
     let nodePackage = null;
-    if(props.withPlayground){
+    if(includePlayground["withPlayground"]){
       await fs.writeFile(`${modulePath}${componentName}/playground/index.js`, assetsGenerator.playgroundJS);
       await fs.createDir(`${modulePath}${componentName}/playground`);
       nodePackage = {
@@ -81,7 +102,7 @@ function createComponent(_props){
 
     if(includeDom["withDom"]){
       await fs.writeFile(`${modulePath}${componentName}/${componentName}.scss`, assetsGenerator.scss);
-      await fs.writeFile(`${modulePath}${componentName}/${componentName}.html`, "");
+      await fs.writeFile(`${modulePath}${componentName}/${componentName}.html`, assetsGenerator.html);
       if(nodePackage){
         await fs.writeFile(`${modulePath}${componentName}/playground/index.html`, assetsGenerator.playgroundHtml);
         nodePackage.scripts[`playground-${componentName}`] = "vite";
@@ -103,13 +124,13 @@ function createComponent(_props){
 
 function moduleGenerator(_params){
 
-  let params = {
+
+  const params = Utilities.transfer(_params, {
     name: null,
     withPlayground: true,
-    withDom: false
-  };
-
-  Utilities.transferParams(_params, params);
+    withDom: false,
+    withStatesSample: false
+  });
 
   if(typeof params.name !== "string" || params.name === ""){
     throw new Error("module name is required");
@@ -118,23 +139,11 @@ function moduleGenerator(_params){
   const moduleElementId = params.name.toLowerCase() + "-element";
   const moduleName = params.name[0].toUpperCase() + params.name.substring(1);
 
-  let retVal ={
-    js: moduleMaker(moduleElementId, moduleName, params.withDom),
-    scss: scss(moduleName),
-    playgroundHtml: playgroundHtml(moduleName),
-    playgroundJS: playgroundJS(moduleName, params.withDom)
-  };
-  if(params.withPlayground){
-    retVal.playgroundHtml = playgroundHtml(moduleName);
-    retVal.playgroundJS = playgroundJS(moduleName, params.withDom);
-  }
-
   return {
-    js: moduleMaker(moduleElementId, moduleName, params.withDom),
+    js: moduleMaker(moduleElementId, moduleName, params.withDom, params.withPlayground, params.withStatesSample),
     scss: scss(moduleName),
+    html: html(moduleName, params.withStatesSample),
     playgroundHtml: playgroundHtml(moduleName),
     playgroundJS: playgroundJS(moduleName, params.withDom)
   };
 }
-
-module.exports = createComponent;
