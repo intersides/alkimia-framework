@@ -1,5 +1,3 @@
-import {warn} from "mocha/lib/errors.js";
-
 export default {
 
   moduleMaker: function(

@@ -1,0 +1,7 @@
+{
+    "description": "generated support file",
+    "scripts": {
+        "playground-LoginWith2fa": "vite",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    }
+}

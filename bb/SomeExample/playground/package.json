@@ -1,0 +1,10 @@
+{
+    "description": "generated support file",
+    "scripts": {
+        "playground-SomeExample": "vite",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+  "dependencies": {
+    "@intersides/alkimia-framework" : "file:../../../"
+  }
+}
