@@ -1,6 +1,6 @@
 {
   "name": "@intersides/alkimia-framework",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Alkimia cli to build JavaScript modules ",
   "main": "src/createComponent.js",
   "type": "module",
