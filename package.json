@@ -1,11 +1,15 @@
 {
-  "name": "@intersides/alkimia-framework",
-  "version": "0.2.3",
-  "description": "Alkimia cli to build JavaScript modules ",
+  "name": "@alkimia/framework",
+  "version": "0.1.0",
+  "description": "Alkimia framework to build JavaScript modules ",
   "main": "src/createComponent.js",
   "type": "module",
   "bin": {
     "alkimia": "cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:intersides/alkimia-framework.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
