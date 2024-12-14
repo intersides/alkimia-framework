@@ -13,8 +13,7 @@ const {
 } = ModulesMaker;
 
 
-import Alkimia from "@alkimia/utilities";
-const Utilities = Alkimia.Utilities;
+import { utilities } from "@alkimia/lib";
 
 export default function createComponent(_props){
   const props = {
@@ -23,7 +22,7 @@ export default function createComponent(_props){
     withPlayground: false
   };
 
-  Utilities.transfer(_props, props);
+  utilities.transfer(_props, props);
 
   return new Promise(async(resolve, reject) => {
 
@@ -125,7 +124,7 @@ export default function createComponent(_props){
 function moduleGenerator(_params){
 
 
-  const params = Utilities.transfer(_params, {
+  const params = utilities.transfer(_params, {
     name: null,
     withPlayground: true,
     withDom: false,

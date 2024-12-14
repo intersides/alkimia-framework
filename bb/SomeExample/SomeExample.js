@@ -1,16 +1,13 @@
-import Alkimia from "@alkimia/utilities";
 import style from "./SomeExample.scss?inline";
 import htmlTemplate from "./SomeExample.html?raw";
-const Utilities = Alkimia.Utilities;
-const { ElementState } = Alkimia.StateFactory;
+import {utilities, ElementState} from "@alkimia/lib";
 
 export default function SomeExample(args) {
-  const _params = Utilities.transfer(args, {});
+  const _params = utilities.transfer(args, {});
 
   const instance = Object.create(SomeExample.prototype);
 
-  const _customElement =
-    Utilities.browser.createAndRegisterWidgetElement("SomeExample");
+  const _customElement = utilities.createAndRegisterWidgetElement("SomeExample");
   instance.element = new _customElement(style, htmlTemplate);
 
   function _onAppended() {

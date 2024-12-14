@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import AlkimiaFramework from "./index.js";
-import Alkimia from"@alkimia/utilities";
-const Utilities = Alkimia.Utilities;
+import { utilities } from"@alkimia/lib";
 
 //TODO: move it into the InterSides utilities package ?
 function extractOptionalArguments(_optionName) {
@@ -11,7 +10,7 @@ function extractOptionalArguments(_optionName) {
   })[0];
   if (optionParam) {
     let value = optionParam.split(_optionName)[1];
-    if (Utilities.isNonemptyString(value)) {
+    if (utilities.isNonemptyString(value)) {
       //convert string "true" or "false" into boolean true or false
       const isBoolean = (/^(true|false)$/i).test(value);
       if(isBoolean){

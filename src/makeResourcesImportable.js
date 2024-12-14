@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "fs";
-import Utilities from "@alkimia/utilities";
+import { utilities } from "@alkimia/lib";
 
 function *retrieveStylesAndTemplates(_path){
   const result = fs.readdirSync(_path, {withFileTypes:true});
@@ -33,7 +33,7 @@ export default function prepareBundle(_params){
     srcDir:"app",
     env:"test"
   };
-  Utilities.transfer(_params, params);
+  utilities.transfer(_params, params);
   console.log("running make bundle using parameters:", params);
 
   for (const entry of retrieveStylesAndTemplates(`./${params.srcDir}`)) {

@@ -1,9 +1,8 @@
-import Alkimia from "@alkimia/utilities";
-const Utilities = Alkimia.Utilities;
+import { utilities } from "@alkimia/lib";
 
 export default function AuthenticationService(args){
 
-  const _params = Utilities.transfer(args, {});
+  const _params = utilities.transfer(args, {});
 
   const secret = "KVKFKRCPNZQUYMLXOVYDSQKJKZDTSRLD";
 

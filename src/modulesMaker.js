@@ -12,25 +12,22 @@ export default {
     let importHtm = `./${_moduleName}.html`;
     importHtm = `${importHtm}`;
 
-    return `import Alkimia from "@alkimia/utilities";
-const Utilities = Alkimia.Utilities;${withDomNode ? `
+    return `import { utilities, ElementState } from "@alkimia/lib";
+${withDomNode ? `
 import style from "${importStyle}?inline";
 import htmlTemplate from "${importHtm}?raw";${withStatesSample ? `
-const {
-  ElementState
-} = Alkimia.StateFactory;
 ` : ""} ` : ""
 }
 
 export default function ${_moduleName}(args){
 
-  const _params = Utilities.transfer(args, {});
+  const _params = utilities.transfer(args, {});
     
   const instance = Object.create(${_moduleName}.prototype);
     ${
   withDomNode
     ? `
-  const _customElement = Utilities.browser.createAndRegisterWidgetElement("${_moduleName}");
+  const _customElement = utilities.createAndRegisterWidgetElement("${_moduleName}");
   instance.element = new _customElement(style, htmlTemplate);
     
   function _onAppended() {

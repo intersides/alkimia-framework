@@ -1,19 +1,15 @@
-import Alkimia from "@alkimia/utilities";
-const Utilities = Alkimia.Utilities;
 import style from "./LoignWith2fa.scss?inline";
 import htmlTemplate from "./LoignWith2fa.html?raw";
-const {
-  ElementState
-} = Alkimia.StateFactory;
- 
+
+import { utilities, ElementState } from "@alkimia/lib";
 
 export default function LoginWith2fa(args){
 
-  const _params = Utilities.transfer(args, {});
+  const _params = utilities.transfer(args, {});
     
   const instance = Object.create(LoginWith2fa.prototype);
     
-  const _customElement = Utilities.browser.createAndRegisterWidgetElement("LoginWith2fa");
+  const _customElement = utilities.createAndRegisterWidgetElement("LoginWith2fa");
   instance.element = new _customElement(style, htmlTemplate);
     
   function _onAppended() {
