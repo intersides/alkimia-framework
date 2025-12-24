@@ -3,20 +3,21 @@ import htmlTemplate from "./SomeExample.html?raw";
 import {utilities, ElementState} from "@alkimia/lib";
 
 export default function SomeExample(args) {
-  const _params = utilities.transfer(args, {});
+  const {} = utilities.transfer(args, {});
 
   const instance = Object.create(SomeExample.prototype);
 
   const _customElement = utilities.createAndRegisterWidgetElement("SomeExample");
   instance.element = new _customElement(style, htmlTemplate);
 
-  function _onAppended() {
+  let _onAppended = function() {
     console.log("_onAppended should be delegated");
-  }
+  };
+  
 
-  let [color, setColor] = [null, (_event) => {}];
-  let [counter, setCounter] = [null, (_event) => {}];
-  let [list, setList] = [null, (_color) => {}];
+  let [color, setColor] = [null, (_) => {}];
+  let [counter, setCounter] = [null, (_) => {}];
+  let [list, setList] = [null, (_) => {}];
 
   let _vParent = null;
 

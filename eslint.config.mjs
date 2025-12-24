@@ -44,7 +44,13 @@ export default [
         { blankLine: "always", prev: "var", next: "return" }
       ],
       "require-await": "warn",
-      "no-unused-vars": ["warn", { vars: "all", args: "after-used", ignoreRestSiblings: false }],
+      "no-unused-vars": ["warn", {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": false,
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }],
       // "no-trailing-spaces": "error",
       "no-redeclare": "error",
       "no-var": "warn",

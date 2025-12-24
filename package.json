@@ -1,5 +1,5 @@
 {
-  "name": "@alkimia/framework",
+  "name": "@alkimia/framework-cli",
   "version": "0.1.0",
   "description": "Alkimia framework to build JavaScript modules ",
   "main": "src/createComponent.js",
@@ -29,6 +29,6 @@
     "eslint": "^9.16.0",
     "mocha": "^10.8.2",
     "sass": "^1.74.1",
-    "vite": "^6.0.2"
+    "vite": "7.1.11"
   }
 }
