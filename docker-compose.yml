@@ -1,0 +1,9 @@
+services:
+  mock-server:
+    build: ./mock-server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./locales:/data/locales:ro
+    environment:
+      - LOCALES_DIR=/data/locales

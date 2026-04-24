@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Router",
+        "category": "services",
+        "description": "SPA router with built-in nav element. Manages History API, emits route changes, highlights active links.",
+        "source": "components/services/Router.js",
+        "dependencies": ["transfer"],
+        "playground": "components/services/Router.playground/"
+    },
+    {
+        "name": "StorageService",
+        "category": "services",
+        "description": "Namespaced wrapper over sessionStorage and localStorage. Provides get/set with optional persistence.",
+        "source": "components/services/StorageService.js",
+        "dependencies": ["transfer"],
+        "playground": null
+    }
+]

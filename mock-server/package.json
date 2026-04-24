@@ -1,0 +1,12 @@
+{
+    "name": "alkimia-mock-server",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "mock-server-dev": "node --watch server.js"
+    },
+    "dependencies": {
+        "otpauth": "^9.5.0",
+        "qrcode": "^1.5.4"
+    }
+}
