@@ -1,0 +1,190 @@
+.DataTable {
+
+    .filter {
+        width: 100%;
+        max-width: 300px;
+        padding: 8px 12px;
+        margin-bottom: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text);
+        font-size: 0.85rem;
+        outline: none;
+
+        &::placeholder {
+            color: var(--text-muted);
+        }
+    }
+
+    .scroll-container {
+        overflow-y: auto;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85rem;
+
+        th {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-muted);
+            font-weight: normal;
+            user-select: none;
+            position: sticky;
+            top: 0;
+            background: var(--bg, #0a0a0f);
+            z-index: 1;
+
+            &.sortable {
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--accent);
+                }
+            }
+
+            &.sort-asc::after {
+                content: ' ↑';
+                color: var(--accent);
+            }
+
+            &.sort-desc::after {
+                content: ' ↓';
+                color: var(--accent);
+            }
+        }
+
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        tr {
+            cursor: pointer;
+
+            &:hover td {
+                background: rgba(255, 255, 255, 0.03);
+            }
+
+            &.expanded td {
+                background: rgba(74, 158, 255, 0.05);
+            }
+        }
+
+        .drawer-row td {
+            padding: 0;
+            border-bottom: 2px solid var(--accent);
+        }
+    }
+
+    .drawer {
+        padding: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: flex-end;
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    .drawer-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 6px 8px;
+            color: var(--text);
+            font-size: 0.85rem;
+            outline: none;
+
+            &:disabled {
+                opacity: 0.4;
+                cursor: default;
+            }
+
+            &:focus {
+                border-color: var(--accent);
+            }
+        }
+    }
+
+    .drawer-actions {
+        display: flex;
+        gap: 8px;
+        margin-left: auto;
+    }
+
+    .drawer-button {
+        padding: 6px 14px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        cursor: pointer;
+
+        &.reset {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+
+            &:hover {
+                color: var(--text);
+            }
+        }
+
+        &.save {
+            background: var(--accent);
+            border: none;
+            color: #fff;
+
+            &:hover {
+                opacity: 0.9;
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: default;
+            }
+        }
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .page-button {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        padding: 4px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.85rem;
+
+        &:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+    }
+
+    .page-info {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+    }
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Router — Playground</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background: #1a1a1a; color: #eee; }
+        .Router-nav { list-style: none; padding: 0; display: flex; gap: 8px; }
+        .Router-nav a { color: #aaa; text-decoration: none; padding: 6px 12px; border-radius: 4px; }
+        .Router-nav a:hover { background: rgba(255,255,255,0.1); }
+        .Router-nav a.active { color: #4a9eff; background: rgba(74,158,255,0.1); }
+        .page { margin-top: 20px; padding: 16px; border: 1px solid #333; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h3>Router Playground</h3>
+    <div id="nav-container"></div>
+    <div id="content"></div>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

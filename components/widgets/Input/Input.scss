@@ -1,0 +1,75 @@
+.Input {
+    margin: 16px 0;
+    max-width: 320px;
+
+    .label {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .field {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.03);
+        transition: border-color 0.2s;
+
+        &.invalid {
+            border-color: #e55;
+        }
+
+        &.valid {
+            border-color: var(--accent);
+        }
+    }
+
+    .input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: var(--text);
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        outline: none;
+    }
+
+    .toggle {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        color: var(--text-muted);
+    }
+
+    .icon {
+        width: 18px;
+        height: 18px;
+
+        path, circle {
+            fill: var(--text-muted);
+        }
+    }
+
+    .issue {
+        font-size: 0.8rem;
+        margin-top: 4px;
+        padding: 0 4px;
+
+        &.error {
+            color: #e55;
+        }
+
+        &.warning {
+            color: #e8a33a;
+        }
+
+        &.feedback {
+            color: var(--text-muted);
+        }
+    }
+}

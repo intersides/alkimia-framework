@@ -1,0 +1,8 @@
+{
+    "name": "authentication-service",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "authentication-service-playground": "npx --prefix ../../.. vite playground"
+    }
+}

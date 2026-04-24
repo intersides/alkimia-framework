@@ -1,0 +1,8 @@
+{
+    "name": "localisation-service",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "localisation-service-playground": "npx --prefix ../../.. vite playground"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "data-table",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "data-table-playground": "npx --prefix ../../.. vite playground"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "icon-service",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "icon-service-playground": "npx --prefix ../../.. vite playground"
+    }
+}
