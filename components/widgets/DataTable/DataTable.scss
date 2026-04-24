@@ -1,4 +1,8 @@
 .DataTable {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
 
     .filter {
         width: 100%;
@@ -18,6 +22,7 @@
     }
 
     .scroll-container {
+        flex: 1;
         overflow-y: auto;
         border: 1px solid var(--border);
         border-radius: 4px;
@@ -103,7 +108,7 @@
             color: var(--text-muted);
         }
 
-        input {
+        input, select {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
             border-radius: 4px;
@@ -135,7 +140,7 @@
         font-size: 0.8rem;
         cursor: pointer;
 
-        &.reset {
+        &.reset, &.close {
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-muted);
@@ -157,6 +162,35 @@
             &:disabled {
                 opacity: 0.5;
                 cursor: default;
+            }
+        }
+    }
+
+    .actions-cell {
+        white-space: nowrap;
+
+        .action-button {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-right: 4px;
+
+            &.edit {
+                background: transparent;
+                border: 1px solid var(--border);
+                color: var(--text-muted);
+
+                &:hover { color: var(--accent); border-color: var(--accent); }
+            }
+
+            &.delete {
+                background: transparent;
+                border: 1px solid var(--border);
+                color: var(--text-muted);
+
+                &:hover { color: #e55; border-color: #e55; }
+                &:disabled { opacity: 0.4; cursor: default; }
             }
         }
     }

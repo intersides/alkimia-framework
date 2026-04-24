@@ -18,6 +18,15 @@ body {
     margin: 20px;
 }
 
+#table {
+    height: calc(100vh - 160px);
+
+    .DataTable{
+        border: 1px solid white;
+        padding: .25rem;
+    }
+}
+
 pre {
     background: #111;
     padding: 12px;

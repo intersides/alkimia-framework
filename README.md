@@ -34,6 +34,7 @@ Most playgrounds are self-contained. **AuthenticationService** and **DataTable**
 ### Start the server (Docker)
 
 ```bash
+cd mock-server
 docker compose up --build
 ```
 

@@ -28,13 +28,14 @@ export default function DataTable(_params) {
 
     const instance = Object.create(DataTable.prototype);
 
-    const { columns, data, pageSize, mode, scrollHeight, localisationService } = transfer(_params, {
+    const { columns, data, pageSize, mode, localisationService, onSave, onDelete } = transfer(_params, {
         columns: [],
         data: [],
         pageSize: 10,
         mode: DataTable.Mode.PAGINATED,
-        scrollHeight: 400,
-        localisationService: null
+        localisationService: null,
+        onSave: null,
+        onDelete: null
     });
 
     let _data = data.slice();
@@ -46,7 +47,8 @@ export default function DataTable(_params) {
     let _filterText = '';
     let _onRowSelect = null;
     let _onLoadMore = null;
-    let _onSave = null;
+    let _onSave = onSave;
+    let _onDelete = onDelete;
     let _loading = false;
     let _expandedRows = new Set();
 
@@ -124,14 +126,18 @@ export default function DataTable(_params) {
             headerRow.appendChild(th);
         }
 
+        if (_onSave || _onDelete) {
+            const actionsTh = document.createElement('th');
+            actionsTh.textContent = 'Actions';
+            headerRow.appendChild(actionsTh);
+        }
+
         _vThead.appendChild(headerRow);
         _vTable.appendChild(_vThead);
         _vTable.appendChild(_vTbody);
 
         _vScrollContainer = document.createElement('div');
         _vScrollContainer.className = 'scroll-container';
-        _vScrollContainer.style.maxHeight = scrollHeight + 'px';
-        _vScrollContainer.style.overflowY = 'auto';
         _vScrollContainer.appendChild(_vTable);
 
         if (mode === DataTable.Mode.INFINITE) {
@@ -316,6 +322,56 @@ export default function DataTable(_params) {
             if (_onRowSelect) { _onRowSelect(row, index); }
         });
 
+        // --- Actions cell ---
+
+        if (_onSave || _onDelete) {
+
+            const actionsTd = document.createElement('td');
+            actionsTd.className = 'actions-cell';
+
+            if (_onSave) {
+                const editBtn = document.createElement('button');
+                editBtn.className = 'action-button edit';
+                editBtn.textContent = 'Edit';
+                editBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const nowHidden = !drawerTr.hidden;
+                    drawerTr.hidden = nowHidden;
+                    tr.classList.toggle('expanded', !nowHidden);
+                    if (!nowHidden) { _expandedRows.add(row.id); }
+                    else { _expandedRows.delete(row.id); }
+                });
+                actionsTd.appendChild(editBtn);
+            }
+
+            if (_onDelete) {
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'action-button delete';
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    deleteBtn.disabled = true;
+                    deleteBtn.textContent = '...';
+                    _onDelete(row, function() {
+                        var dataIdx = _data.indexOf(row);
+                        if (dataIdx !== -1) { _data.splice(dataIdx, 1); }
+                        var filtIdx = _filtered.indexOf(row);
+                        if (filtIdx !== -1) { _filtered.splice(filtIdx, 1); }
+                        var totalPages = Math.ceil(_filtered.length / pageSize) || 1;
+                        if (_currentPage >= totalPages) {
+                            _currentPage = Math.max(0, totalPages - 1);
+                        }
+                        var scrollTop = _vScrollContainer.scrollTop;
+                        _renderPage();
+                        _vScrollContainer.scrollTop = scrollTop;
+                    });
+                });
+                actionsTd.appendChild(deleteBtn);
+            }
+
+            tr.appendChild(actionsTd);
+        }
+
         // --- Drawer row ---
 
         const drawerTr = document.createElement('tr');
@@ -326,7 +382,8 @@ export default function DataTable(_params) {
         if (isExpanded) { tr.classList.add('expanded'); }
 
         const drawerTd = document.createElement('td');
-        drawerTd.setAttribute('colspan', columns.length);
+        const colSpan = (_onSave || _onDelete) ? columns.length + 1 : columns.length;
+        drawerTd.setAttribute('colspan', colSpan);
 
         const drawerContent = document.createElement('div');
         drawerContent.className = 'drawer';
@@ -344,15 +401,28 @@ export default function DataTable(_params) {
             const label = document.createElement('label');
             label.textContent = col.label;
 
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.value = row[col.key] !== undefined ? row[col.key] : '';
-            input.disabled = !editable;
+            let control;
 
-            inputs[col.key] = input;
+            if (col.options && editable) {
+                control = document.createElement('select');
+                for (let k = 0; k < col.options.length; k++) {
+                    const opt = document.createElement('option');
+                    opt.value = col.options[k];
+                    opt.textContent = col.options[k];
+                    control.appendChild(opt);
+                }
+                control.value = row[col.key] || '';
+            } else {
+                control = document.createElement('input');
+                control.type = 'text';
+                control.value = row[col.key] !== undefined ? row[col.key] : '';
+                control.disabled = !editable;
+            }
+
+            inputs[col.key] = control;
 
             field.appendChild(label);
-            field.appendChild(input);
+            field.appendChild(control);
             drawerContent.appendChild(field);
         }
 
@@ -419,6 +489,16 @@ export default function DataTable(_params) {
 
         actions.appendChild(resetButton);
         actions.appendChild(saveButton);
+
+        const closeButton = document.createElement('button');
+        closeButton.className = 'drawer-button close';
+        closeButton.textContent = 'Close';
+        closeButton.addEventListener('click', function() {
+            drawerTr.hidden = true;
+            tr.classList.remove('expanded');
+            _expandedRows.delete(row.id);
+        });
+        actions.appendChild(closeButton);
         drawerContent.appendChild(actions);
         drawerTd.appendChild(drawerContent);
         drawerTr.appendChild(drawerTd);
