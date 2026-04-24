@@ -3,6 +3,6 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "data-table-playground": "npx --prefix ../../.. vite playground"
+        "data-table-playground": "npx --prefix ../../.. vite playground --config playground/vite.config.js"
     }
 }

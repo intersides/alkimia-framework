@@ -1,8 +1,8 @@
 # Alkimia — Patterns
 
-Vanilla JavaScript components and their playgrounds. Each component is a single file, zero framework dependencies, built with factory functions and closures.
+Vanilla JavaScript components and their playgrounds. Each component is a single file, with zero or local-only framework dependencies, built with factory functions and closures.
 
-This is the source code behind [alkimia-framework.io](https://alkimia-framework.io).
+This is the source code behind [alkimia-framework.io](https://alkimia-framework.io). Visit the site for more informations. 
 
 ---
 
@@ -83,8 +83,6 @@ export default function ComponentName(_params) {
     return _init();
 }
 ```
-
-No classes. No `new`. No `this` for state. Copy a file, it works.
 
 ---
 

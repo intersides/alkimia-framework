@@ -7,7 +7,7 @@ const iconService = IconService({ skin: 'default' });
 
 const auth = AuthenticationService({
     iconService: iconService,
-    apiUrl: 'https://alkimia-framework.localhost:3443'
+    apiUrl: ''
 });
 
 auth.appendTo(document.getElementById('auth'));

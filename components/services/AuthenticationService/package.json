@@ -3,6 +3,6 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "authentication-service-playground": "npx --prefix ../../.. vite playground"
+        "authentication-service-playground": "npx --prefix ../../.. vite playground --config playground/vite.config.js"
     }
 }

@@ -3,7 +3,7 @@ import DataTable from '../DataTable.js';
 const container = document.getElementById('table');
 const output = document.getElementById('output');
 
-const API = 'https://alkimia-framework.localhost:3443/api/users';
+const API = '/api/users';
 
 function rpc(action, body) {
 
