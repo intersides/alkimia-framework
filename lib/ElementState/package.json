@@ -1,0 +1,8 @@
+{
+    "name": "element-state",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "element-state-playground": "npx --prefix ../.. vite playground"
+    }
+}

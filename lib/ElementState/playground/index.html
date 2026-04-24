@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElementState — Shopping Cart</title>
+    <link rel="stylesheet" href="./playground.scss">
+</head>
+<body>
+    <h3>ElementState — Shopping Cart</h3>
+
+    <div class="product">
+        <span class="product-name">Alkimia Mug</span>
+        <span class="product-price">€9.99</span>
+    </div>
+
+    <div class="controls">
+        <button id="remove">−</button>
+        <span id="quantity">0</span>
+        <button id="add">+</button>
+    </div>
+
+    <div class="cart">
+        <span class="cart-icon">🛒</span>
+        <span id="badge" class="badge" hidden>0</span>
+    </div>
+
+    <div class="summary">
+        <span>Total: </span>
+        <span id="total">€0.00</span>
+    </div>
+
+    <button id="checkout" class="checkout" disabled>Checkout</button>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
