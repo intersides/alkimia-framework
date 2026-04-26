@@ -1,7 +1,5 @@
 import { transfer } from '../../../lib/utilities/index.js';
 
-const locales = import.meta.glob('../../../locales/*.json', { eager: true });
-
 /**
  * LocalisationService
  *
@@ -12,7 +10,11 @@ const locales = import.meta.glob('../../../locales/*.json', { eager: true });
  * Dependencies: transfer
  *
  * Usage:
- *   const localisationService = LocalisationService({ storageService, defaultLang: 'en' });
+ *   const localisationService = LocalisationService({
+ *       storageService,
+ *       defaultLang: 'en',
+ *       dictionaries: { en: { ... }, fr: { ... } }
+ *   });
  *   localisationService.appendTo(sidebarEl);
  *   localisationService.onChange(function(langId) { ... });
  *   localisationService.getTerm('route-home');
@@ -21,9 +23,10 @@ export default function LocalisationService(_params) {
 
     const instance = Object.create(LocalisationService.prototype);
 
-    const { storageService, defaultLang } = transfer(_params, {
+    const { storageService, defaultLang, dictionaries } = transfer(_params, {
         storageService: null,
-        defaultLang: 'en'
+        defaultLang: 'en',
+        dictionaries: null
     });
 
     const _langNames = {
@@ -35,7 +38,7 @@ export default function LocalisationService(_params) {
         ja: '日本語'
     };
 
-    let _dictionaries = {};
+    let _dictionaries = dictionaries || {};
     let _currentLang = defaultLang;
     let _listeners = [];
     let $selector = null;
@@ -43,7 +46,6 @@ export default function LocalisationService(_params) {
 
     function _init() {
 
-        _loadDictionaries();
         _buildSelector();
 
         const saved = storageService ? storageService.get('lang') : null;
@@ -53,20 +55,6 @@ export default function LocalisationService(_params) {
         _setLanguage(resolved);
 
         return instance;
-    }
-
-
-    function _loadDictionaries() {
-
-        for (const path in locales) {
-
-            const match = path.match(/\/(\w+)\.json$/);
-
-            if (match) {
-                const langId = match[1];
-                _dictionaries[langId] = locales[path].default || locales[path];
-            }
-        }
     }
 
 

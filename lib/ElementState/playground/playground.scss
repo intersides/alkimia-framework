@@ -1,10 +1,4 @@
-:root {
-    --bg: #0a0a0f;
-    --text: #e0e0e0;
-    --text-muted: #888;
-    --accent: #4a9eff;
-    --border: #333;
-}
+@use '../../../lib/playground/theme';
 
 body {
     font-family: sans-serif;

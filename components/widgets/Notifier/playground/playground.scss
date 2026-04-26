@@ -1,0 +1,52 @@
+@use '../../../../lib/playground/theme';
+@use '../Notifier';
+
+
+body {
+    font-family: sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 40px;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    select {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 6px 10px;
+        color: var(--text);
+        font-size: 0.85rem;
+    }
+}
+
+button {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+
+    &:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+}

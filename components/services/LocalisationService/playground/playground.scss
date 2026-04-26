@@ -1,0 +1,28 @@
+@use '../../../../lib/playground/theme';
+
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+pre {
+    background: var(--bg-code);
+    padding: 12px;
+    border-radius: 4px;
+}
+
+select {
+    padding: 4px 8px;
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+.term {
+    margin: 8px 0;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}

@@ -1,0 +1,8 @@
+{
+    "name": "event-service",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "event-service-playground": "npx --prefix ../../.. vite playground"
+    }
+}

@@ -1,26 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-mode="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LocalisationService — Playground</title>
-    <style>
-        body { font-family: sans-serif; margin: 20px; background: #1a1a1a; color: #eee; }
-        pre { background: #111; padding: 12px; border-radius: 4px; }
-        select { padding: 4px 8px; font-size: 14px; }
-        .term { margin: 8px 0; padding: 8px; border: 1px solid #333; border-radius: 4px; }
-    </style>
+    <link rel="stylesheet" href="./playground.scss">
 </head>
 <body>
     <h3>LocalisationService Playground</h3>
     <div id="selector-mount"></div>
-    <hr style="border-color: #333; margin: 16px 0;">
+    <hr style="border-color: var(--border); margin: 16px 0;">
     <h4>data-localised attributes:</h4>
-    <div class="term"><span data-localised="route-home"></span></div>
-    <div class="term"><span data-localised="route-philosophy"></span></div>
-    <div class="term"><span data-localised="route-components"></span></div>
-    <div class="term"><span data-localised="route-login"></span></div>
-    <hr style="border-color: #333; margin: 16px 0;">
+    <div class="term"><span data-localised="greeting">Hello</span></div>
+    <div class="term"><span data-localised="farewell">Goodbye</span></div>
+    <div class="term"><span data-localised="welcome">Welcome to the playground</span></div>
+    <hr style="border-color: var(--border); margin: 16px 0;">
     <h4>Event log:</h4>
     <pre id="output"></pre>
     <script type="module" src="./main.js"></script>

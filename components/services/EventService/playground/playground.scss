@@ -1,0 +1,124 @@
+@use '../../../../lib/playground/theme';
+@use '../../../widgets/Notifier/Notifier';
+@use '../../../widgets/Input/Input';
+
+
+body {
+    font-family: sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 40px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.panel {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+
+    h4 {
+        margin: 0 0 12px;
+        color: var(--accent);
+        font-size: 0.9rem;
+    }
+
+    p { color: var(--text-muted); margin: 6px 0; font-size: 0.85rem; }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+
+    label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    input {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 6px 10px;
+        color: var(--text);
+        font-size: 0.85rem;
+        outline: none;
+
+        &:focus { border-color: var(--accent); }
+    }
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+
+    &:hover { border-color: var(--accent); color: var(--accent); }
+    &:disabled { opacity: 0.3; cursor: default; }
+}
+
+.role-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        padding: 6px 0;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--border);
+
+        &.admin-link { color: var(--accent); }
+    }
+}
+
+.token code {
+    color: var(--accent);
+    font-size: 0.8rem;
+}
+
+.request {
+    font-family: monospace;
+    font-size: 0.8rem;
+}
+
+.log {
+    background: var(--bg-code);
+    color: var(--text);
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    max-height: 200px;
+    overflow-y: auto;
+}

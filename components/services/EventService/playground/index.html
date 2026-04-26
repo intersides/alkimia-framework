@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventService — Playground</title>
+    <link rel="stylesheet" href="./playground.scss">
+</head>
+<body>
+    <h3>EventService — Auth Flow</h3>
+    <p class="subtitle">Four independent components connected through one event bus. Login to see them all react.</p>
+    <div class="panels">
+        <div id="login" class="panel"></div>
+        <div id="header" class="panel"></div>
+        <div id="sidebar" class="panel"></div>
+        <div id="api" class="panel"></div>
+    </div>
+    <pre id="log" class="log"></pre>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

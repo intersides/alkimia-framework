@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifier — Playground</title>
+    <link rel="stylesheet" href="./playground.scss">
+</head>
+<body>
+    <h3>Notifier Playground</h3>
+
+    <div class="controls">
+        <div class="group">
+            <label>Level</label>
+            <select id="level">
+                <option value="info">Info</option>
+                <option value="warning">Warning</option>
+                <option value="critical">Critical</option>
+            </select>
+        </div>
+
+        <div class="group">
+            <label>Position</label>
+            <select id="position">
+                <option value="top-left">Top Left</option>
+                <option value="top-center">Top Center</option>
+                <option value="top-right" selected>Top Right</option>
+                <option value="middle-left">Middle Left</option>
+                <option value="middle-center">Middle Center</option>
+                <option value="middle-right">Middle Right</option>
+                <option value="bottom-left">Bottom Left</option>
+                <option value="bottom-center">Bottom Center</option>
+                <option value="bottom-right">Bottom Right</option>
+            </select>
+        </div>
+
+        <div class="group">
+            <label>Animation</label>
+            <select id="animation">
+                <option value="slide">Slide</option>
+                <option value="pop">Pop</option>
+            </select>
+        </div>
+
+        <button id="fire">Fire notification</button>
+        <button id="clear">Clear all</button>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

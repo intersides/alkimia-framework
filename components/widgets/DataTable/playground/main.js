@@ -1,7 +1,16 @@
+import addThemeToggle from '../../../../lib/playground/themeToggle.js';
 import DataTable from '../DataTable.js';
+import Notifier from '../../Notifier/Notifier.js';
 
 const container = document.getElementById('table');
 const output = document.getElementById('output');
+
+const notifier = Notifier({
+    position: Notifier.Position.TOP_RIGHT,
+    animation: Notifier.Animation.SLIDE,
+    autoDismiss: 0
+});
+notifier.appendTo(document.body);
 
 const API = '/api/users';
 
@@ -11,7 +20,10 @@ function rpc(action, body) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
-    }).then(function(res) { return res.json(); });
+    }).then(function(res) {
+        if (!res.ok) { throw new Error(res.status + ' ' + res.statusText); }
+        return res.json();
+    });
 }
 
 rpc('list', { page: 0, size: 1000 }).then(function(result) {
@@ -48,4 +60,13 @@ rpc('list', { page: 0, size: 1000 }).then(function(result) {
     table.onRowSelect(function(row) {
         output.textContent += 'Selected: #' + row.id + ' ' + row.name + '\n';
     });
+
+}).catch(function() {
+    notifier.notify({
+        message: 'Cannot reach the mock server. Start it with: cd mock-server && docker compose up --build',
+        level: Notifier.Level.CRITICAL,
+        dismiss: true
+    });
 });
+
+addThemeToggle();

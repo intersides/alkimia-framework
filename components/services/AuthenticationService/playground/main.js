@@ -1,3 +1,4 @@
+import addThemeToggle from '../../../../lib/playground/themeToggle.js';
 import IconService from '../../../services/IconService/IconService.js';
 import AuthenticationService from '../AuthenticationService.js';
 
@@ -15,3 +16,4 @@ auth.appendTo(document.getElementById('auth'));
 auth.onStateChange(function(state, previousState) {
     output.textContent += previousState + ' → ' + state + '\n';
 });
+addThemeToggle();

@@ -1,3 +1,4 @@
+import addThemeToggle from '../../../../lib/playground/themeToggle.js';
 import IconService from '../../../services/IconService/IconService.js';
 import Input from '../Input.js';
 
@@ -105,3 +106,4 @@ emailInput.onValidityChange(function(valid) {
 passwordInput.onValidityChange(function(valid) {
     output.textContent += 'password valid: ' + valid + '\n';
 });
+addThemeToggle();
