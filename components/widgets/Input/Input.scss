@@ -13,7 +13,7 @@
         display: flex;
         border: 1px solid var(--border);
         border-radius: 4px;
-        background: rgba(255, 255, 255, 0.03);
+        background: var(--bg-surface, #1a1a2e);
         transition: border-color 0.2s;
 
         &.invalid {
@@ -43,15 +43,6 @@
         display: flex;
         align-items: center;
         color: var(--text-muted);
-    }
-
-    .icon {
-        width: 18px;
-        height: 18px;
-
-        path, circle {
-            fill: var(--text-muted);
-        }
     }
 
     .issue {

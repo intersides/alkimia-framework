@@ -144,8 +144,8 @@ export default function Input(_params) {
         const showIcon = passwordIcons.visible;
         const hideIcon = passwordIcons.hidden;
 
-        showIcon.classList.add('icon');
-        hideIcon.classList.add('icon');
+        showIcon.classList.add('icon-small');
+        hideIcon.classList.add('icon-small');
 
         showIcon.style.display = 'none';
         button.appendChild(showIcon);

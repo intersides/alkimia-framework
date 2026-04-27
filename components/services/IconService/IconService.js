@@ -15,6 +15,12 @@ const _sprites = {
     default: defaultSprite
 };
 
+IconService.Size = Object.freeze({
+    SMALL:  'icon-small',
+    MEDIUM: 'icon-medium',
+    LARGE:  'icon-large'
+});
+
 
 export default function IconService(_params) {
 
