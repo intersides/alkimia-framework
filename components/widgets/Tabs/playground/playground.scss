@@ -1,0 +1,30 @@
+@use '../../../../lib/playground/theme';
+@use '../Tabs';
+
+body {
+    font-family: sans-serif;
+    margin: 40px;
+}
+
+pre {
+    background: var(--bg-code);
+    padding: 12px;
+    border-radius: 4px;
+    margin-top: 20px;
+    font-size: 0.8rem;
+}
+
+.demo-input {
+    padding: 6px 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    margin-top: 8px;
+}
+
+.demo-checkbox {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}

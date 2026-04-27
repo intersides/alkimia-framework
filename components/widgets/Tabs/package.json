@@ -1,0 +1,8 @@
+{
+    "name": "tabs",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "tabs-playground": "npx --prefix ../../.. vite playground"
+    }
+}
