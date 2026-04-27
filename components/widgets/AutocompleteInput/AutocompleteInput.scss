@@ -1,0 +1,93 @@
+.AutocompleteInput {
+    max-width: 320px;
+
+    .AutocompleteInput-label {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .AutocompleteInput-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: var(--bg-surface, #1a1a2e);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        transition: border-color 0.15s;
+
+        &:focus-within {
+            border-color: var(--accent);
+        }
+    }
+
+    .AutocompleteInput-input {
+        flex: 1;
+        padding: 8px 12px;
+        background: transparent;
+        border: none;
+        color: var(--text);
+        font-size: 0.9rem;
+        outline: none;
+        min-width: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .AutocompleteInput-clear {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 4px 8px;
+        line-height: 0;
+        flex-shrink: 0;
+
+        &:hover:not(:disabled) { color: var(--text); }
+        &:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
+    }
+
+    .AutocompleteInput-list {
+        position: absolute;
+        top: 100%;
+        left: -1px;
+        right: -1px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background: var(--bg-surface, #1a1a2e);
+        border: 1px solid var(--border);
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        overflow-y: auto;
+        z-index: 100;
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    .AutocompleteInput-item {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        color: var(--text);
+        cursor: pointer;
+        min-height: 36px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        line-height: 1.4;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &.highlighted {
+            background: var(--accent);
+            color: #fff;
+        }
+    }
+}

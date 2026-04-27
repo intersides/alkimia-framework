@@ -1,0 +1,8 @@
+{
+    "name": "autocomplete-input",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "autocomplete-input-playground": "npx --prefix ../../.. vite playground"
+    }
+}
