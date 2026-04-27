@@ -35,7 +35,8 @@ export default function LocalisationService(_params) {
         de: 'Deutsch',
         it: 'Italiano',
         es: 'Español',
-        ja: '日本語'
+        ja: '日本語',
+        ko: '한국어'
     };
 
     let _dictionaries = dictionaries || {};
