@@ -1,0 +1,8 @@
+{
+    "name": "menu",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "menu-playground": "npx --prefix ../../.. vite playground"
+    }
+}

@@ -1,0 +1,19 @@
+@use '../../../../lib/playground/theme';
+@use '../Menu';
+
+body {
+    font-family: sans-serif;
+    margin: 40px;
+}
+
+pre {
+    background: var(--bg-code);
+    padding: 12px;
+    border-radius: 4px;
+    margin-top: 20px;
+    font-size: 0.8rem;
+}
+
+.menu-info    { color: #4a9eff !important; &:hover, &.focused { background: rgba(74, 158, 255, 0.15) !important; color: #4a9eff !important; } }
+.menu-warning { color: #f5a623 !important; &:hover, &.focused { background: rgba(245, 166, 35, 0.15) !important; color: #f5a623 !important; } }
+.menu-critical { color: #e55 !important; &:hover, &.focused { background: rgba(238, 85, 85, 0.15) !important; color: #e55 !important; } }
