@@ -1,8 +1,8 @@
 # Alkimia — Patterns
 
-Vanilla JavaScript components and their playgrounds. Each component is a single file, with zero or local-only framework dependencies, built with factory functions and closures.
+Vanilla JavaScript components and their playgrounds. Each component is a single file, zero framework dependencies, built with factory functions and closures.
 
-This is the source code behind [alkimia-framework.io](https://alkimia-framework.io). Visit the site for more informations. 
+This is the source code behind [alkimia-framework.io](https://alkimia-framework.io).
 
 ---
 
@@ -11,17 +11,30 @@ This is the source code behind [alkimia-framework.io](https://alkimia-framework.
 ### Services
 | Component | Description |
 |---|---|
+| **AuthenticationService** | Login, register, 2FA/TOTP flow |
+| **EventService** | Pub/sub event bus for cross-component communication |
+| **IconService** | SVG icon-set loader, extracts icons by ID |
+| **LocalisationService** | Language selector, DOM scanning, onChange events |
 | **Router** | SPA router with nav, page lifecycle, groups, address bar control |
 | **StorageService** | Namespaced sessionStorage/localStorage wrapper |
-| **LocalisationService** | Language selector, DOM scanning, onChange events |
-| **IconService** | SVG icon-set loader, extracts icons by ID, forces currentColor |
-| **AuthenticationService** | Login, register, 2FA/TOTP flow — requires server |
 
 ### Widgets
 | Component | Description |
 |---|---|
+| **AutocompleteInput** | Text input with filterable dropdown list, keyboard navigation |
+| **DataTable** | Sort, filter, paginate, inline editing drawer, actions column |
+| **Dialog** | Modal dialog wrapping native `<dialog>`, size presets, backdrop dismiss |
 | **Input** | Text, email, password with validators and inline issues |
-| **DataTable** | Sort, filter, paginate, inline editing drawer — requires server |
+| **Menu** | Dropdown menu with nested submenus, expandable sections, keyboard navigation |
+| **Notifier** | Notification stack with positioning, animation, alert levels |
+| **Tabs** | Tab bar with lazy content loading, persistent state |
+| **Tooltip** | Singleton tooltip, attaches to any element, auto-flip positioning |
+
+### Utilities
+| Component | Description |
+|---|---|
+| **ElementState** | Proxy-based reactive DOM binding, one value drives many elements |
+| **transfer()** | Parameter defaults, dependency injection, config merging (~15 lines) |
 
 ---
 
@@ -86,5 +99,7 @@ export default function ComponentName(_params) {
 ```
 
 ---
+
+This code is provided for reference. No license is granted for reuse or redistribution.
 
 [alkimia-framework.io](https://alkimia-framework.io) · © InterSides
