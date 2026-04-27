@@ -1,0 +1,60 @@
+.Tooltip {
+    position: fixed;
+    z-index: 10000;
+    pointer-events: none;
+    max-width: 280px;
+
+    &[hidden] { display: none; }
+
+    .Tooltip-content {
+        background: #111122;
+        color: #f0f0f0;
+        border: 1px solid var(--accent, #4a9eff);
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        line-height: 1.4;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .Tooltip-arrow {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: #111122;
+        border: 1px solid var(--accent, #4a9eff);
+        transform: rotate(45deg);
+    }
+
+    &[data-position="top"] .Tooltip-arrow {
+        bottom: -5px;
+        left: 50%;
+        margin-left: -4px;
+        border-top: none;
+        border-left: none;
+    }
+
+    &[data-position="bottom"] .Tooltip-arrow {
+        top: -5px;
+        left: 50%;
+        margin-left: -4px;
+        border-bottom: none;
+        border-right: none;
+    }
+
+    &[data-position="left"] .Tooltip-arrow {
+        right: -5px;
+        top: 50%;
+        margin-top: -4px;
+        border-bottom: none;
+        border-left: none;
+    }
+
+    &[data-position="right"] .Tooltip-arrow {
+        left: -5px;
+        top: 50%;
+        margin-top: -4px;
+        border-top: none;
+        border-right: none;
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "tooltip",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "tooltip-playground": "npx --prefix ../../.. vite playground"
+    }
+}
